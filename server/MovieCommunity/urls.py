@@ -21,5 +21,4 @@ urlpatterns = [
     path('accounts/', include('accounts.urls')),
     path('movies/', include('movies.urls')),
     path('reviews/', include('reviews.urls')),
-
 ]
