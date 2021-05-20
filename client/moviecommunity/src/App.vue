@@ -1,7 +1,10 @@
 <template>
   <div id="app">
-    <h1>Movie World</h1>
-    <i class="fas fa-film fa-3x"></i>
+    <span>
+      <i class="fas fa-film fa-3x"></i>
+    </span>
+      <h1 class="title">Movie World</h1>
+
     <div id="nav">
       <span v-if="isLogin">
         <router-link @click.native="logout" to="#">Logout</router-link> |
@@ -68,5 +71,10 @@ export default {
 
 #nav a.router-link-exact-active {
   color: #42b983;
+}
+
+.title {
+  display: inline;
+  margin-left: 10px;
 }
 </style>

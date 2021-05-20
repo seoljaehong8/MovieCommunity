@@ -1,14 +1,14 @@
 <template>
   <div class="login">
     <h1>로그인</h1>
-    <div>
+    <div class="id-box">
       <label class="label" for="username">아이디</label>
-      <input type="text" id="username" v-model="credentials.username">
+      <input type="text" class="input-text" id="username" v-model="credentials.username">
     </div>
     <br>
     <div>
       <label class="label" for="password">비밀번호</label>
-      <input type="password" id="password" v-model="credentials.password">
+      <input type="password" class="input-text" id="password" v-model="credentials.password">
     </div>
     <br>
     <router-link :to="{ name: 'Signup' }">회원이 아니신가요? </router-link> 
@@ -58,11 +58,25 @@ export default {
 <style scoped>
   .login {
     margin: 0 auto;
-    border: solid 3px gray;
     width: 300px;
+    padding: 50px;
+    border-radius: 30px;
+    background-color: #F6F6F6;
+    font-family: 'Noto Sans KR', sans-serif;
   }
 
   .label {
     width: 70px;
+    font-weight: 100;
   }
+
+  .id-box {
+    margin-top: 30px;
+  }
+
+  .input-text {
+    border: 1px solid #eaeaea;
+  }
+
+  
 </style>
