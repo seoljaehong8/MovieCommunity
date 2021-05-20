@@ -1,5 +1,7 @@
 <template>
   <div id="app">
+    <h1>Movie World</h1>
+    <i class="fas fa-film fa-3x"></i>
     <div id="nav">
       <span v-if="isLogin">
         <router-link @click.native="logout" to="#">Logout</router-link> |
@@ -7,8 +9,8 @@
         <router-link :to="{ name: 'ReviewList' }">Review</router-link> |
       </span>
       <span v-else>
-        <router-link :to="{ name: 'Signup' }">Signup</router-link> |
-        <router-link :to="{ name: 'Login' }">Login</router-link> 
+        
+        <!-- <router-link :to="{ name: 'Login' }">Login</router-link>  -->
       </span>
     </div>
     <router-view @login="isLogin = true"/>
@@ -31,6 +33,7 @@ export default {
     }
   },
   created: function () {
+    this.$router.push({ name: 'Login' })
     const token = localStorage.getItem('jwt')
     if (token) {
       this.isLogin = true
@@ -40,12 +43,18 @@ export default {
 </script>
 
 <style>
+
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  
+  /* width: 100vw;
+  height: 100vh; */
+  
 }
 
 #nav {

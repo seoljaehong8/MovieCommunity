@@ -1,22 +1,24 @@
 <template>
-  <div class="border">
-    <h1>Signup</h1>
+  <div class="border row mb-3">
+    <h1>회원가입</h1>
     <div>
-      <label for="username">사용자 이름: </label>
+      <label class="label" for="username">아이디 </label>
       <input type="text" id="username" v-model="credentials.username">
+      
     </div>
     <br>
     <div>
-      <label for="password">비밀번호: </label>
+      <label class="label" for="password">비밀번호 </label>
       <input type="password" id="password" v-model="credentials.password">
+      
     </div>
     <br>
     <div>
-      <label for="passwordConfirmation">비밀번호 확인: </label>
-      <input type="password" id="passwordConfirmation" v-model="credentials.passwordConfirmation">
+      <label class="label" for="passwordConfirmation">비밀번호 재확인 </label>
+      <input class="inputPassword" type="password" id="passwordConfirmation" v-model="credentials.passwordConfirmation">
     </div>
     <br>
-    <button class="buttonP" @click="signup(credentials)">회원가입</button>
+    <button @click="signup(credentials)">가입하기</button>
   </div>
 </template>
 
@@ -56,6 +58,10 @@ export default {
 </script>
 
 <style scoped>
+  .title {
+    
+  }
+
   .border {
     margin: 0 auto;
     height: 400px;
@@ -63,8 +69,14 @@ export default {
     border: 3px solid gold
   }
 
-  .buttonP {
-    bottom: 100px;
+  .label {
+    width: 70px;
   }
+
+  .inputPassword {
+    margin-bottom: 50px;
+  }
+  /* 비밀번호 재확인 input 태그 위치 */
+
 
 </style>

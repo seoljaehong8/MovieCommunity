@@ -1,15 +1,21 @@
 <template>
   <div class="login">
-    <h1>Login</h1>
+    <h1>로그인</h1>
     <div>
-      <label for="username">사용자 이름: </label>
+      <label class="label" for="username">아이디</label>
       <input type="text" id="username" v-model="credentials.username">
     </div>
+    <br>
     <div>
-      <label for="password">비밀번호: </label>
+      <label class="label" for="password">비밀번호</label>
       <input type="password" id="password" v-model="credentials.password">
     </div>
-    <button @click="login">로그인</button>
+    <br>
+    <router-link :to="{ name: 'Signup' }">회원이 아니신가요? </router-link> 
+    <br>
+    <br>
+    <button class="btn btn-secondary" @click="login">로그인</button>
+
   </div>
 </template>
 
@@ -51,6 +57,12 @@ export default {
 
 <style scoped>
   .login {
+    margin: 0 auto;
     border: solid 3px gray;
+    width: 300px;
+  }
+
+  .label {
+    width: 70px;
   }
 </style>

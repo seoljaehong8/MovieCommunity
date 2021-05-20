@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1>MOVIE</h1>
+    <h1> MOVIE </h1>
     <div class="row">
       <MovieListItem 
         v-for="(movie,idx) in movieObj" 
