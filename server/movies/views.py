@@ -1,16 +1,18 @@
-from typing import OrderedDict
+from typing import Collection, OrderedDict
 from django.shortcuts import render, get_list_or_404
 
 import requests
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
+import json
 
 from . models import Movies
 from .serializers import MovieSerializer
 
 # Create your views here.
-def getmovies(request):
+# 데이터베이스에 영화 정보 저장하기
+def makeMovieData(request):
 
     page = 0
 
@@ -28,29 +30,6 @@ def getmovies(request):
         datas = datas['results']
         
         for data in datas:
-            # overview = data['overview']
-
-            # if overview[0] == '':
-            #     continue
-            # title = data['title']
-            # number = data['id']
-            # genre = data['genre_ids']
-
-            # genre_list = []
-            # for g in genre[0]:
-            #     genre_list.append(genre_dict[g])
-
-            # poster_path = data['poster_path']
-            # release_date = data['release_date']
-            # vote_average = data['vote_average']
-            # vote_count = data['vote_count']
-            # popularity = data['popularity']
-    
-            # movie = Movies(number=number[0],title=title[0],genre=genre_list,overview=overview[0],
-            #     poster_path=poster_path[0],release_date=release_date[0],vote_average=vote_average[0],
-            #     vote_count=vote_count[0],popularity=popularity[0])
-            # movie.save()   
-
             overview = data['overview']
             
             if overview == '':
@@ -76,11 +55,51 @@ def getmovies(request):
                 vote_count=vote_count,popularity=popularity)
             movie.save()  
 
+            # overview = data['overview']
+
+            # if overview[0] == '':
+            #     continue
+            # title = data['title']
+            # number = data['id']
+            # genre = data['genre_ids']
+
+            # genre_list = []
+            # for g in genre[0]:
+            #     genre_list.append(genre_dict[g])
+
+            # poster_path = data['poster_path']
+            # release_date = data['release_date']
+            # vote_average = data['vote_average']
+            # vote_count = data['vote_count']
+            # popularity = data['popularity']
+    
+            # movie = Movies(number=number[0],title=title[0],genre=genre_list,overview=overview[0],
+            #     poster_path=poster_path[0],release_date=release_date[0],vote_average=vote_average[0],
+            #     vote_count=vote_count[0],popularity=popularity[0])
+            # movie.save()   
+
+
 
     return render(request,'list.html')
 
+
 @api_view(['GET'])
-def listmovies(request):
+def makeDumpData(request):
+
     movies = get_list_or_404(Movies)
     serializer = MovieSerializer(movies,many=True)
+
+
+    with open('movies.json','w',encoding='utf-8') as make_file:
+        json.dump(serializer.data ,make_file, ensure_ascii=False, indent='\t')
+
     return Response(serializer.data)
+
+
+@api_view(['GET'])
+def moviesList(request):
+    if request.method == 'GET':
+        movies = get_list_or_404(Movies)
+        serializer = MovieSerializer(movies,many=True)
+
+        return Response(serializer.data[:50])

@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Signup from '@/views/accounts/Signup'
 import Login from '@/views/accounts/Login'
-import Index from '@/views/movies/Index'
+import MovieList from '@/views/movies/MovieList'
 
 
 Vue.use(VueRouter)
@@ -19,9 +19,9 @@ const routes = [
     component: Login,
   },
   {
-    path: '/movies/Index',
-    name: 'Index',
-    component: Index,
+    path: '/movies/movieList',
+    name: 'MovieList',
+    component: MovieList,
   },
 ]
 
