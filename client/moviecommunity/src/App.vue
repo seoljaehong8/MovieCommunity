@@ -33,10 +33,11 @@ export default {
     }
   },
   created: function () {
-    this.$router.push({ name: 'Login' })
     const token = localStorage.getItem('jwt')
     if (token) {
       this.isLogin = true
+    } else {
+      this.$router.push({ name: 'Login' })
     }
   }
 }
