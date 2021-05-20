@@ -1,19 +1,22 @@
 <template>
-  <div>
+  <div class="border">
     <h1>Signup</h1>
     <div>
       <label for="username">사용자 이름: </label>
       <input type="text" id="username" v-model="credentials.username">
     </div>
+    <br>
     <div>
       <label for="password">비밀번호: </label>
       <input type="password" id="password" v-model="credentials.password">
     </div>
+    <br>
     <div>
       <label for="passwordConfirmation">비밀번호 확인: </label>
       <input type="password" id="passwordConfirmation" v-model="credentials.passwordConfirmation">
     </div>
-    <button @click="signup(credentials)">회원가입</button>
+    <br>
+    <button class="buttonP" @click="signup(credentials)">회원가입</button>
   </div>
 </template>
 
@@ -51,3 +54,17 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+  .border {
+    margin: 0 auto;
+    height: 400px;
+    width: 300px;
+    border: 3px solid gold
+  }
+
+  .buttonP {
+    bottom: 100px;
+  }
+
+</style>
