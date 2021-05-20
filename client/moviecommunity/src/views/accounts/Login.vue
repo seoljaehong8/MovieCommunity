@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="login">
     <h1>Login</h1>
     <div>
       <label for="username">사용자 이름: </label>
@@ -48,3 +48,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+  .login {
+    border: solid 3px gray;
+  }
+</style>
