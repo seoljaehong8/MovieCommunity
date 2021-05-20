@@ -12,9 +12,9 @@
 
 <script>
 import axios from 'axios'
-import MovieListItem from '@/components/MovieListItem.vue'
+import MovieListItem from '@/components/movies/MovieListItem.vue'
 
-const url = 'http://127.0.0.1:8000/'
+const SERVER_URL = process.env.VUE_APP_SERVER_URL
 
 export default {
   name: 'MovieList',
@@ -31,7 +31,7 @@ export default {
   created: function() {
     axios({
       method: 'get',
-      url: `${url}movies`
+      url: `${SERVER_URL}/movies`
     })
       .then(res => {
         this.movieObj = res.data

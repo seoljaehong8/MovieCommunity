@@ -1,5 +1,4 @@
-from typing import Collection, OrderedDict
-from django.shortcuts import render, get_list_or_404
+from django.shortcuts import get_object_or_404, render, get_list_or_404
 
 import requests
 from rest_framework.response import Response
@@ -12,7 +11,7 @@ from .serializers import MovieSerializer
 
 # Create your views here.
 # 데이터베이스에 영화 정보 저장하기
-def makeMovieData(request):
+def make_movieData(request):
 
     page = 0
 
@@ -84,7 +83,7 @@ def makeMovieData(request):
 
 
 @api_view(['GET'])
-def makeDumpData(request):
+def make_dumpData(request, movie_pk):
 
     movies = get_list_or_404(Movies)
     serializer = MovieSerializer(movies,many=True)
@@ -97,9 +96,15 @@ def makeDumpData(request):
 
 
 @api_view(['GET'])
-def moviesList(request):
+def movie_list(request):
     if request.method == 'GET':
         movies = get_list_or_404(Movies)
         serializer = MovieSerializer(movies,many=True)
 
         return Response(serializer.data[:50])
+
+@api_view(['GET'])
+def movie_detail(request,movie_pk):
+    movie = get_object_or_404(Movies, pk=movie_pk)
+    serializer = MovieSerializer(movie)
+    return Response(serializer.data)
