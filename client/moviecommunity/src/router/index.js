@@ -5,6 +5,8 @@ import Login from '@/views/accounts/Login'
 import MovieList from '@/views/movies/MovieList'
 import ReviewList from '@/views/reviews/ReviewList'
 import ReviewForm from '@/components/reviews/ReviewForm'
+import ReviewListDetail from '@/components/reviews/ReviewListDetail'
+
 
 
 Vue.use(VueRouter)
@@ -35,6 +37,13 @@ const routes = [
     name: 'ReviewForm',
     component: ReviewForm,
   },
+  {
+    path: '/reviews/reviewDetail',
+    name: 'ReviewListDetail',
+    component: ReviewListDetail,
+  }
+
+
 ]
 
 const router = new VueRouter({

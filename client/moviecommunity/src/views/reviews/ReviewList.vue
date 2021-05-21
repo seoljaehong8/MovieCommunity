@@ -2,10 +2,11 @@
   <div>
     <div>
       <button type="button" class="btn btn-light">
-        <router-link :to="{ name: 'ReviewForm' }" class="a-tag">리뷰작성</router-link>
+        <router-link :to="{ name: 'ReviewForm' }" class="a-tag">리뷰 작성</router-link>
       </button>
+
     </div>
-    <div>
+    <div class="review-list">
       <ReviewListItem v-for="(review,idx) in reviews" :key="idx"
         :review="review" />
     </div>
@@ -60,5 +61,9 @@ export default {
 <style>
   .a-tag{
     text-decoration: none;
+  }
+
+  .review-list {
+    margin-top: 50px;
   }
 </style>
