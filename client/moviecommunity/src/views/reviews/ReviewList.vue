@@ -1,12 +1,14 @@
 <template>
   <div>
-    <ReviewListItem v-for="(review,idx) in reviewObj" :key="idx"
+    <ReviewListItem v-for="(review,idx) in reviews" :key="idx"
       :review="review" />
   </div>
 </template>
 
 <script>
 import axios from 'axios'
+import { mapState } from 'vuex'
+
 import ReviewListItem from '@/components/reviews/ReviewListItem.vue'
 
 const SERVER_URL = process.env.VUE_APP_SERVER_URL
@@ -16,10 +18,10 @@ export default {
   components: {
     ReviewListItem,
   },
-  data: function() {
-    return {
-      reviewObj: null,
-    }
+  computed: {
+    ...mapState([
+      'reviews'
+    ])
   },
   created: function() {
     axios({
@@ -27,7 +29,7 @@ export default {
       url: `${SERVER_URL}/reviews/`,
     })
       .then(res => {
-        this.reviewObj = res.data
+        this.$store.dispatch('createReviewList',res.data)
       })
   }
 
