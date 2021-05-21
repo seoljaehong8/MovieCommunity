@@ -14,6 +14,7 @@
 
 <script>
 import axios from 'axios'
+// import _ from 'lodash'
 import { mapState } from 'vuex'
 
 import ReviewListItem from '@/components/reviews/ReviewListItem.vue'
@@ -28,7 +29,7 @@ export default {
   computed: {
     ...mapState([
       'reviews'
-    ])
+    ]),
   },
   methods: {
     setToken: function () {
@@ -36,7 +37,6 @@ export default {
       const config = {
         Authorization: `JWT ${token}`
       }
-      console.log(token)
       return config
     },
   },
@@ -53,7 +53,6 @@ export default {
         console.log(err)
       })
   }
-
 }
 </script>
 

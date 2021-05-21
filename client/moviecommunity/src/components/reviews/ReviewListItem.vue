@@ -1,5 +1,5 @@
 <template>
-  <div class='container'>
+  <div class="container">
     <div class="row">
       <div class="offset-2 col-3">
         <img :src="moviePosterPath" alt="">
@@ -21,9 +21,9 @@
         <p>작성자 : {{ username }}</p>
         <p>최종 작성 시간 : {{ review.updated_at }}</p>
       </div> 
-    <hr>  
+      <hr>  
     </div>
-    
+  </div>   
   
 </template>
 

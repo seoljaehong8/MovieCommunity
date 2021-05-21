@@ -17,7 +17,7 @@ export default new Vuex.Store({
       state.movies = movieList
     },
     CREATE_REVIEW_LIST: function(state, reviewList){
-      state.reviews = reviewList
+      state.reviews = reviewList.reverse()
     }
   },
   actions: {
@@ -29,7 +29,13 @@ export default new Vuex.Store({
     }
   },
   getters: {
-
+    movieTitles: function(state) {
+      const titles = []
+      state.movies.forEach(function(movie) {
+        titles.push(movie.title)
+      })
+      return titles
+    }
   },
   modules: {
   }
