@@ -30,10 +30,20 @@ export default {
       'movies',
     ])
   },
+  methods: {
+    setToken: function () {
+      const token = localStorage.getItem('jwt')
+      const config = {
+        Authorization: `JWT ${token}`
+      }
+      return config
+    },
+  },
   created: function() {
     axios({
       method: 'get',
-      url: `${SERVER_URL}/movies`
+      url: `${SERVER_URL}/movies`,
+      headers: this.setToken()
     })
       .then(res => {
         this.$store.dispatch('createMovieList', res.data)

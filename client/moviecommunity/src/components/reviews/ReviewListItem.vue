@@ -6,12 +6,13 @@
       </div>
       <div class="col-5">
         <h1>{{ movieTitle }}</h1>
-        <h2>작성자 : {{ username }}</h2>
-        <h2>작성시간 : {{ review.created_at }}</h2>
-        <h2>수정시간 : {{ review.updated_at }}</h2>
+        <h2>작성자 : {{ username }}</h2>        
+        <h2>작성시간 : {{ review.created_at | moment('YYYY-MM-DD HH:mm:ss') }}</h2>
+        <h2>수정시간 : {{ review.updated_at | moment('YYYY-MM-DD HH:mm:ss') }}</h2>
       </div>
       <div class="row">
         <div class="col">
+          <h2>제목 : {{ review.title }}</h2>
           <h2>내용 : {{ review.content }}</h2>
         </div>
       </div>
@@ -21,10 +22,13 @@
 </template>
 
 <script>
-import axios from "axios"
-import jwt_decode from "jwt-decode"
+// import axios from "axios"
+import Vue from 'vue' 
+import vueMoment from 'vue-moment' 
+Vue.use(vueMoment)
 
-const SERVER_URL = process.env.VUE_APP_SERVER_URL
+
+// const SERVER_URL = process.env.VUE_APP_SERVER_URL
 
 export default {
   name: 'ReviewListItem',
@@ -39,23 +43,14 @@ export default {
     }    
   },
   created: function() {
-    console.log(this.review)
 
-    // 토큰정보로 username 가져오기
-    const token = localStorage.getItem('jwt')
-    const decoded = jwt_decode(token);
-    this.username = decoded.username
+    // 영화제목, 포스터이미지 정보 가져오기
+    const moviePk = this.review.movie_id
+    const movie = this.$store.state.movies[moviePk-1]
 
-    // 영화상세 정보 가져오기
-    const moviePk = this.review.movie
-    axios({
-      method: 'GET',
-      url: `${SERVER_URL}/movies/${moviePk}`
-    })
-      .then(res => {
-        this.moviePosterPath = `https://image.tmdb.org/t/p/w200${res.data.poster_path}`
-        this.movieTitle = res.data.title
-      })
+    this.moviePosterPath = `https://image.tmdb.org/t/p/w200${movie.poster_path}`
+    this.movieTitle = movie.title
+    this.username = this.review.username
   }
   
 }
