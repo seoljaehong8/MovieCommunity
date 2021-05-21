@@ -3,8 +3,10 @@ from django.shortcuts import get_object_or_404, render, get_list_or_404
 import requests
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from rest_framework import status
 import json
+from rest_framework.decorators import authentication_classes, permission_classes
+from rest_framework.permissions import IsAuthenticated
+from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 from . models import Movies
 from .serializers import MovieSerializer
@@ -96,6 +98,8 @@ def make_dumpData(request, movie_pk):
 
 
 @api_view(['GET'])
+@authentication_classes([JSONWebTokenAuthentication])
+@permission_classes([IsAuthenticated])
 def movie_list(request):
     if request.method == 'GET':
         movies = get_list_or_404(Movies)
@@ -104,6 +108,8 @@ def movie_list(request):
         return Response(serializer.data[:50])
 
 @api_view(['GET'])
+@authentication_classes([JSONWebTokenAuthentication])
+@permission_classes([IsAuthenticated])
 def movie_detail(request,movie_pk):
     movie = get_object_or_404(Movies, pk=movie_pk)
     serializer = MovieSerializer(movie)

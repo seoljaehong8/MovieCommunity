@@ -1,8 +1,14 @@
-<template>
+<template>  
   <div>
-    <ReviewListItem v-for="(review,idx) in reviews"
-      :key="idx"
-      :review="review" />
+    <div>
+      <button type="button" class="btn btn-light">
+        <router-link :to="{ name: 'ReviewForm' }" class="a-tag">리뷰작성</router-link>
+      </button>
+    </div>
+    <div>
+      <ReviewListItem v-for="(review,idx) in reviews" :key="idx"
+        :review="review" />
+    </div>
   </div>
 </template>
 
@@ -24,13 +30,27 @@ export default {
       'reviews'
     ])
   },
-  created: function() {
+  methods: {
+    setToken: function () {
+      const token = localStorage.getItem('jwt')
+      const config = {
+        Authorization: `JWT ${token}`
+      }
+      console.log(token)
+      return config
+    },
+  },
+  created: function() {    
     axios({
       method: 'GET',
       url: `${SERVER_URL}/reviews/`,
+      headers: this.setToken()
     })
       .then(res => {
         this.$store.dispatch('createReviewList',res.data)
+      })
+      .catch(err => {
+        console.log(err)
       })
   }
 
@@ -38,5 +58,7 @@ export default {
 </script>
 
 <style>
-
+  .a-tag{
+    text-decoration: none;
+  }
 </style>
