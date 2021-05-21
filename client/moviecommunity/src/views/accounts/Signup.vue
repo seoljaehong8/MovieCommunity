@@ -1,8 +1,8 @@
 <template>
-  <div class="border row mb-3">
+  <div class="signup">
     <h1>회원가입</h1>
     <div>
-      <label class="label" for="username">아이디 </label>
+      <label class="" for="username">아이디 </label>
       <input type="text" id="username" v-model="credentials.username">
       
     </div>
@@ -15,10 +15,10 @@
     <br>
     <div>
       <label class="label" for="passwordConfirmation">비밀번호 재확인 </label>
-      <input class="inputPassword" type="password" id="passwordConfirmation" v-model="credentials.passwordConfirmation">
+      <input class="" type="password" id="passwordConfirmation" v-model="credentials.passwordConfirmation">
     </div>
     <br>
-    <button @click="signup(credentials)">가입하기</button>
+    <button class="btn btn-outline-secondary" @click="signup(credentials)">가입하기</button>
   </div>
 </template>
 
@@ -58,25 +58,17 @@ export default {
 </script>
 
 <style scoped>
-  .title {
-    
-  }
-
-  .border {
+  .signup {
     margin: 0 auto;
-    height: 400px;
     width: 300px;
-    border: 3px solid gold
+    padding: 50px;
+    border-radius: 30px;
+    background-color: #F6F6F6;
+    font-family: 'Noto Sans KR', sans-serif;
   }
 
-  .label {
-    width: 70px;
-  }
 
-  .inputPassword {
-    margin-bottom: 50px;
-  }
-  /* 비밀번호 재확인 input 태그 위치 */
+ 
 
 
 </style>

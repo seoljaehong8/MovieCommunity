@@ -1,23 +1,20 @@
 <template>
-  <div class='container'>
-    <div class="row">
-      <div class="offset-2 col-3">
-        <img :src="moviePosterPath" alt="">
+    <div>   
+    
+      <div class="posterpath">
+        <p>{{ movieTitle }}</p>
+        <img :src="moviePosterPath" alt="">       
       </div>
-      <div class="col-5">
-        <h1>{{ movieTitle }}</h1>
-        <h2>작성자 : {{ username }}</h2>
-        <h2>작성시간 : {{ review.created_at }}</h2>
-        <h2>수정시간 : {{ review.updated_at }}</h2>
-      </div>
-      <div class="row">
-        <div class="col">
-          <h2>내용 : {{ review.content }}</h2>
-        </div>
-      </div>
+     
+      <div class="review">
+        <p>리뷰 : {{ review.content }}</p>
+        <p>작성자 : {{ username }}</p>
+        <p>최종 작성 시간 : {{ review.updated_at }}</p>
+      </div> 
+    <hr>  
     </div>
-    <hr>
-  </div>
+    
+  
 </template>
 
 <script>
@@ -62,5 +59,19 @@ export default {
 </script>
 
 <style>
+
+.posterpath {
+  /* text-align: center; */
+  float: left;
+
+}
+
+.review {
+  /* display:inline-block; */
+  float: none;
+
+
+
+}
 
 </style>

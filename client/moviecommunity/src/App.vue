@@ -77,5 +77,6 @@ export default {
 .title {
   display: inline;
   margin-left: 10px;
+  font-family: 'Mountains of Christmas', cursive;
 }
 </style>
