@@ -32,7 +32,6 @@
     <div v-if="selectedMovie">
       <img :src="getMoviePosterUrl(selectedMovie)" alt="">
       {{ selectedMovie.title }}
-      {{ selectedMovie.id }}
     </div>
     
     <br>
@@ -88,10 +87,7 @@ export default {
         data: data,
       })
         .then(res => {
-          console.log(res)
-          // setTimeout(() => {
-          //   this.$router.push({ name: 'ReviewList' })
-          // },1000)
+          this.$store.dispatch('createReview',res.data)
           alert('글이 작성 되었습니다.')
           this.$router.push({ name: 'ReviewList' })
         })

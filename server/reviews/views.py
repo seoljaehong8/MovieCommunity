@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework.decorators import authentication_classes, permission_classes
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.views import APIView
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 from .models import Review, Comment
@@ -16,21 +17,22 @@ from .serializers import CommentSerializer, ReviewSerializer
 @authentication_classes([JSONWebTokenAuthentication])
 @permission_classes([IsAuthenticated])
 def review_list_create(request):
+
     if request.method == 'GET':
-        reviews = get_list_or_404(Review)
+        try:
+            reviews = get_list_or_404(Review)
+        except:
+            reviews = Review.objects.all()
         serializer = ReviewSerializer(reviews,many=True)
         return Response(serializer.data)
 
     elif request.method == 'POST':
-        print(request.data)
         movie_pk = request.data['movie']
         movie = get_object_or_404(Movies, pk=movie_pk)
         serializer = ReviewSerializer(data=request.data)
 
         if serializer.is_valid(raise_exception=True):
-            print(request.user)
             serializer.save(user=request.user, movie=movie)
-            print(serializer.data)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
@@ -58,18 +60,31 @@ def review_detail_delete_update(request, review_pk):
             return Response(serializer.data)
   
 
-
-@api_view(['POST','DELETE'])
-def comment_create_delete(request,review_pk,comment_pk):
+@api_view(['GET','POST'])
+@authentication_classes([JSONWebTokenAuthentication])
+@permission_classes([IsAuthenticated])
+def comment_list_create(request,review_pk):
     review = get_object_or_404(Review,pk=review_pk)
-    if request.method == 'POST':
-        review = get_object_or_404(Review, pk=review_pk)
+    if request.method == 'GET':
+        comments = review.comment_set.all()
+        serializer = CommentSerializer(comments,many=True)
+        print(comments)
+        return Response(serializer.data)
+
+    elif request.method == 'POST':
         serializer = CommentSerializer(data=request.data)
+        print(request.data)
         if serializer.is_valid(raise_exception=True):
             serializer.save(user=request.user, review=review)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-    elif request.method == 'DELETE':
+
+@api_view(['PUT','DELETE'])
+@authentication_classes([JSONWebTokenAuthentication])
+@permission_classes([IsAuthenticated])
+def comment_delete_update(request,comment_pk):
+
+    if request.method == 'DELETE':
         comment = get_object_or_404(Comment, pk=comment_pk)
         comment.delete()
         data = {
