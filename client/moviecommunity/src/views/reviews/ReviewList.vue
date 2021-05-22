@@ -16,8 +16,8 @@
 
 <script>
 import axios from 'axios'
-// import _ from 'lodash'
-import { mapState } from 'vuex'
+import _ from 'lodash'
+// import { mapState } from 'vuex'
 
 import ReviewListItem from '@/components/reviews/ReviewListItem.vue'
 
@@ -29,9 +29,10 @@ export default {
     ReviewListItem,
   },
   computed: {
-    ...mapState([
-      'reviews'
-    ]),
+    reviews: function() {
+      // console.log(this.$store.state.reviews)
+      return _.orderBy(this.$store.state.reviews,['created_at'],['desc'])
+    },
   },
   methods: {
     setToken: function () {

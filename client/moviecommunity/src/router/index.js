@@ -41,7 +41,7 @@ const routes = [
     path: '/reviews/reviewDetail',
     name: 'ReviewDetail',
     component: ReviewDetail,
-    porps: true
+    props: true
   }
 
 

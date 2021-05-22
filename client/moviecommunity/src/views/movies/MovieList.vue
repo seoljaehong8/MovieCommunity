@@ -10,6 +10,7 @@
   </div>
 </template>
 
+
 <script>
 import MovieListItem from '@/components/movies/MovieListItem.vue'
 import axios from 'axios'

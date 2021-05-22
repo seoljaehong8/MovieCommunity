@@ -25,8 +25,8 @@
 // import axios from "axios"
 import Vue from 'vue' 
 import vueMoment from 'vue-moment' 
-Vue.use(vueMoment)
 
+Vue.use(vueMoment)
 
 // const SERVER_URL = process.env.VUE_APP_SERVER_URL
 
@@ -35,37 +35,15 @@ export default {
 
   props: {
     review: Object,
-    key: Number
-  },
-  data: function() {
-    return {
-      moviePosterPath: null,
-      movieTitle: null,
-      username: null,
-      selectedReview: null,
-      test: '',
-    }    
   },
   created: function() {
-    this.test = 'abcdef'
-    // 영화제목, 포스터이미지 정보 가져오기
-    const moviePk = this.review.movie_id
-    const movie = this.$store.state.movies[moviePk-1]
-
-    this.moviePosterPath = `https://image.tmdb.org/t/p/w200${movie.poster_path}`
-    this.movieTitle = movie.title
-    this.username = this.review.username
+    this.moviePosterPath = `https://image.tmdb.org/t/p/w200${this.review.poster_path}`
   },
   methods: {
     routeDetailPage: function(review) {
-      this.$router.push({name: 'ReviewDetail', 
-        params: {
-          review: review, 
-          movietitle: this.movieTitle, 
-          poster_path: this.moviePosterPath
-        }
-      })
-    }
+      localStorage.setItem(`reviewId`, review.id)
+      this.$router.push({name: 'ReviewDetail'})
+    },    
   }
 
   
