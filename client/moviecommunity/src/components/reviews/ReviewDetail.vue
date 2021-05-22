@@ -6,12 +6,13 @@
         <img :src="posterPath" alt="">
       </div>
       <div class="col-5">
+
         <h1>{{ movieTitle }}</h1>
+        <h2>제목 : {{review.title}}</h2>
+        <h2>내용 : {{review.content}}</h2>
         <h2>작성자 : {{ review.username }}</h2>        
         <h2>작성시간 : {{ review.created_at | moment('YYYY-MM-DD HH:mm:ss') }}</h2>
         <h2>수정시간 : {{ review.updated_at | moment('YYYY-MM-DD HH:mm:ss') }}</h2>
-        <h2>제목 : {{review.title}}</h2>
-        <h2>내용 : {{review.content}}</h2>
       </div>
 
       <hr>  
@@ -34,6 +35,7 @@ export default {
       posterPath: null,
     }
   },
+  
   created: function() {
     this.review = this.$route.params.review
     this.movieTitle = this.$route.params.movietitle
@@ -45,5 +47,6 @@ export default {
 </script>
 
 <style>
+  
 
 </style>

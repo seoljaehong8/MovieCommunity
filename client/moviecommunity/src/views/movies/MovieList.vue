@@ -11,11 +11,10 @@
 </template>
 
 <script>
+import MovieListItem from '@/components/movies/MovieListItem.vue'
 import axios from 'axios'
 import { mapState } from 'vuex'
 
-import MovieListItem from '@/components/movies/MovieListItem.vue'
-// import PaginationItem from '@/components/movies/PaginationItem.vue'
 
 const SERVER_URL = process.env.VUE_APP_SERVER_URL
 

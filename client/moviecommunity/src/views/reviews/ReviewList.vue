@@ -4,8 +4,8 @@
       <button type="button" class="btn btn-light">
         <router-link :to="{ name: 'ReviewForm' }" class="a-tag">리뷰 작성</router-link>
       </button>
-
     </div>
+    
     <div class="review-list">
       <ReviewListItem v-for="(review,idx) in reviews" 
       :key="idx"
