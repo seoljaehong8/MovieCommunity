@@ -1,12 +1,12 @@
 <template>
   <div class="container" style="cursor: pointer;" @click="routeDetailPage(review)">
-    <div class="row">
+    <div class="row" style="background-color:lightgray;">
       <div class="offset-2 col-3">       
-        <p class="movie-title">{{ movieTitle }}</p>
+        <p class="movie-title">{{ review.movie_title }}</p>
         <br>
         <a class="content-summury review-title">{{review.title}}</a>       
         <p class="content-summury review-content animate__animated animate__fadeInLeft">{{review.content}}</p>
-        <p class="writer">작성자 : {{ username }}</p>        
+        <p class="writer">작성자 : {{ review.user_name }}</p>        
         <!-- <p>작성시간 : {{ review.created_at | moment('YYYY-MM-DD HH:mm:ss') }}</p> -->
         <p class="date">{{ review.updated_at | moment('YYYY-MM-DD HH:mm:ss') }}</p>
       </div>
