@@ -1,5 +1,5 @@
 <template>
-  <div v-if="review" class="container">
+  <div class="container">
     <div class="row">
       <div class="offset-2 col-3">
         <img :src="posterPath" alt="" />
@@ -15,49 +15,60 @@
         </div>
 
         <div v-else>
-          <div v-if="isMine">
-            <h2>글 제목 : {{ review.title }}</h2>
-            <h2>내용 : {{ review.content }}</h2>
-            <button @click="changeIsUpdate">수정</button>
-            <button @click="deleteReview">삭제</button>
-          </div>
+          <h2>글 제목 : {{ review.title }}</h2>
+          <h2>내용 : {{ review.content }}</h2>
+
+          <!-- <h2>
+            작성시간 : {{ review.created_at | moment("YYYY-MM-DD HH:mm:ss") }}
+          </h2> -->
+          <p>{{ review.user_name }}</p>
+          <p>{{ review.updated_at | moment("YYYY-MM-DD HH:mm:ss") }}
+          </p>
+
+          <button @click="changeIsUpdate">수정</button>
+          <button @click="deleteReview">삭제</button>
+
         </div>
 
       </div>
 
       <hr>
     </div>
-    <CommentList :reviewId="this.review.id" />
+    <Comment :reviewId="this.review.id" />
   </div>
 </template>
 
 <script>
-// import Vue from "vue";
-// import vueMoment from "vue-moment";
-// Vue.use(vueMoment);
-
+import Vue from "vue";
+import vueMoment from "vue-moment";
 import axios from "axios";
-import jwt_decode from "jwt-decode"
-import CommentList from "@/components/comments/CommentList.vue";
 
+import Comment from "@/components/comments/CommentList.vue";
+
+Vue.use(vueMoment);
 const SERVER_URL = process.env.VUE_APP_SERVER_URL;
-const token = localStorage.getItem('jwt')
-const decoded = jwt_decode(token)
 
 export default {
   name: "ReviewDetail",
   data: function () {
     return {
-      review: null,
+      // review: null,
       posterPath: null,
       isUpdate: false,
       updateTitle: null,
       updateContent: null,
-      isMine: false,
+      reivews: null,
     };
   },
   components: {
-    CommentList,
+    Comment,
+  },
+  computed: {
+    review: function () {
+      const reviewId = localStorage.getItem("reviewId");
+      console.log("computed");
+      return this.$store.getters.getDetailReview(reviewId);
+    },
   },
   methods: {
     setToken: function () {
@@ -75,8 +86,9 @@ export default {
         movie: this.review.movie_id,
       };
 
+      console.log("send dispatch");
       const payload = {
-        review: this.review,
+        reviewId: this.review.id,
         updateTitle: this.updateTitle,
         updateContent: this.updateContent,
       };
@@ -91,7 +103,7 @@ export default {
         data: data,
       })
         .then((res) => {
-          alert('글이 수정 되었습니다.')
+          // alert('글이 수정 되었습니다.')
           console.log(res);
         })
         .catch((err) => {
@@ -100,7 +112,6 @@ export default {
     },
     deleteReview: function () {
       const reviewId = this.review.id;
-      // this.$store.dispatch("deleteReview", this.review);
       axios({
         method: "DELETE",
         url: `${SERVER_URL}/reviews/${reviewId}/`,
@@ -120,24 +131,10 @@ export default {
     },
   },
   created: function () {
-    const reviewId = localStorage.getItem("reviewId");
-    axios({
-      method: "GET",
-      url: `${SERVER_URL}/reviews/${reviewId}/`,
-      headers: this.setToken(),
-    })
-      .then((res) => {
-        this.review = res.data;
-        this.updateTitle = this.review.title;
-        this.updateContent = this.review.content;
-        this.posterPath = `https://image.tmdb.org/t/p/w200${this.review.poster_path}`;
-        console.log(this.review.user_name, '/' , decoded.username)
-        this.isMine = this.review.user_name === decoded.username
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    this.updateTitle = this.review.title;
+    this.updateContent = this.review.content;
+    this.posterPath = `https://image.tmdb.org/t/p/w200${this.review.poster_path}`;
+    console.log("created");
   },
 };
 </script>

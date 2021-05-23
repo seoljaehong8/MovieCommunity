@@ -21,6 +21,7 @@
 </template>
 
 <script>
+const SERVER_URL = process.env.VUE_APP_SERVER_URL
 
 export default {
   name: 'App',
@@ -34,10 +35,10 @@ export default {
       this.isLogin = false
       localStorage.removeItem('jwt')
       this.$router.push({ name: 'Login' })
-    }
+    },
+
   },
   created: function () {
-
     const token = localStorage.getItem('jwt')
     if (token) {
       this.isLogin = true
