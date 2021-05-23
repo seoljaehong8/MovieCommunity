@@ -34,7 +34,6 @@
 // import axios from "axios"
 import Vue from "vue";
 import vueMoment from "vue-moment";
-
 Vue.use(vueMoment);
 
 // const SERVER_URL = process.env.VUE_APP_SERVER_URL

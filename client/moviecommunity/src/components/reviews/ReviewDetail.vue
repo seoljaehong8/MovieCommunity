@@ -20,10 +20,12 @@
           <button @click="updateReview">수정</button>
         </div>
         <div v-else>
-          <h2>글 제목 : {{ review.title }}</h2>
-          <h2>내용 : {{ review.content }}</h2>
-          <button @click="changeIsUpdate">수정</button>
-          <button @click="deleteReview">삭제</button>
+          <div v-if="isMine">
+            <h2>글 제목 : {{ review.title }}</h2>
+            <h2>내용 : {{ review.content }}</h2>
+            <button @click="changeIsUpdate">수정</button>
+            <button @click="deleteReview">삭제</button>
+          </div>
         </div>
       </div>
 
@@ -39,10 +41,12 @@
 // Vue.use(vueMoment);
 
 import axios from "axios";
-
+import jwt_decode from "jwt-decode"
 import CommentList from "@/components/comments/CommentList.vue";
 
 const SERVER_URL = process.env.VUE_APP_SERVER_URL;
+const token = localStorage.getItem('jwt')
+const decoded = jwt_decode(token)
 
 export default {
   name: "ReviewDetail",
@@ -53,7 +57,7 @@ export default {
       isUpdate: false,
       updateTitle: null,
       updateContent: null,
-      reivews: null,
+      isMine: false,
     };
   },
   components: {
@@ -131,6 +135,8 @@ export default {
         this.updateTitle = this.review.title;
         this.updateContent = this.review.content;
         this.posterPath = `https://image.tmdb.org/t/p/w200${this.review.poster_path}`;
+        console.log(this.review.user_name, '/' , decoded.username)
+        this.isMine = this.review.user_name === decoded.username
         console.log(res);
       })
       .catch((err) => {
