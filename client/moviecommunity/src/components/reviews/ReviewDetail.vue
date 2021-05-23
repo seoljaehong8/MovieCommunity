@@ -5,20 +5,15 @@
         <img :src="posterPath" alt="" />
       </div>
       <div class="col-5">
-        <h1>영화제목 : {{ review.movie_title }}</h1>
-        <h2>작성자 : {{ review.user_name }}</h2>
-        <h2>
-          작성시간 : {{ review.created_at | moment("YYYY-MM-DD HH:mm:ss") }}
-        </h2>
-        <h2>
-          수정시간 : {{ review.updated_at | moment("YYYY-MM-DD HH:mm:ss") }}
-        </h2>
+        <h1>{{ review.movie_title }}</h1>
+
         <div v-if="isUpdate">
           <input v-model="updateTitle" type="text" />
           <input v-model="updateContent" type="text" />
           <br />
           <button @click="updateReview">수정</button>
         </div>
+
         <div v-else>
           <div v-if="isMine">
             <h2>글 제목 : {{ review.title }}</h2>
@@ -27,9 +22,10 @@
             <button @click="deleteReview">삭제</button>
           </div>
         </div>
+
       </div>
 
-      <hr />
+      <hr>
     </div>
     <CommentList :reviewId="this.review.id" />
   </div>
