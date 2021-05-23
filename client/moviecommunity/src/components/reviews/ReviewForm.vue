@@ -46,7 +46,6 @@
 
 <script>
 import axios from 'axios'
-import jwt_decode from "jwt-decode"
 
 const SERVER_URL = process.env.VUE_APP_SERVER_URL
 
@@ -69,13 +68,8 @@ export default {
       }
       return config
     },
-    createReview: function() {
-      // 토큰정보로 username 가져오기
-      const token = localStorage.getItem('jwt')
-      const decoded = jwt_decode(token);
-      
+    createReview: function() {      
       const data = {
-        username: decoded.username,
         title: this.title,
         content: this.content,
         movie: this.selectedMovie.id

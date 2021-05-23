@@ -27,7 +27,7 @@
         </div>
       </div>
 
-      <hr />
+      <hr>
     </div>
     <CommentList :reviewId="this.review.id" />
   </div>

@@ -6,6 +6,7 @@ import MovieList from '@/views/movies/MovieList'
 import ReviewList from '@/views/reviews/ReviewList'
 import ReviewForm from '@/components/reviews/ReviewForm'
 import ReviewDetail from '@/components/reviews/ReviewDetail'
+import movieDetail from '@/components/movies/MovieDetail'
 
 
 
@@ -41,6 +42,12 @@ const routes = [
     path: '/reviews/reviewDetail',
     name: 'ReviewDetail',
     component: ReviewDetail,
+    props: true
+  },
+  {
+    path: '/movies/movieDetail',
+    name: 'movieDetail',
+    component: movieDetail,
     props: true
   }
 

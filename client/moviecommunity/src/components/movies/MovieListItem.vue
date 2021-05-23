@@ -1,8 +1,7 @@
 <template>
-  <div class="card col-xl-4 col-12 my-3">
+  <div class="card col-xl-4 col-12 my-3" @click="movieDetail" style="cursor:pointer;">
     <img :src="getPosterUrl" class="card-img-top" alt="...">
     <div class="card-body">
-
       <div class="star-ratings">
         <div 
           class="star-ratings-fill space-x-2 text-lg"
@@ -28,11 +27,6 @@ export default {
   props: {
     movie: Object,
   },
-  data: function() {
-    return {
-      title: [],
-    }
-  },
   computed: {
     getPosterUrl: function() {
       const url = `https://image.tmdb.org/t/p/w500${this.movie.poster_path}`
@@ -41,6 +35,13 @@ export default {
     ratingToPercent: function() {
       const score = this.movie.vote_average * 10;
       return score + 1.5;
+    }
+  },
+  methods: {
+    movieDetail: function() {
+      localStorage.setItem(`movieId`, this.movie.id)
+      console.log(this.movie.id)
+      this.$router.push({name:'movieDetail'})
     }
   }
 }

@@ -1,7 +1,5 @@
 from rest_framework import serializers
 from .models import Review, Comment
-from movies.models import Movies
-from movies.serializers import MovieSerializer
 
 class CommentSerializer(serializers.ModelSerializer):
     user_name = serializers.ReadOnlyField(source='user.username')

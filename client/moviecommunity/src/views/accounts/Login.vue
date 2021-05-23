@@ -37,7 +37,7 @@ export default {
   methods: {
     login: function () {
       axios({
-        method: 'post',
+        method: 'POST',
         url: `${SERVER_URL}/accounts/api-token-auth/`,
         data: this.credentials,
       })

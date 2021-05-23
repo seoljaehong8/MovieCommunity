@@ -41,12 +41,15 @@ export default {
   },
   created: function() {
     axios({
-      method: 'get',
-      url: `${SERVER_URL}/movies`,
+      method: 'GET',
+      url: `${SERVER_URL}/movies/`,
       headers: this.setToken()
     })
       .then(res => {
         this.$store.dispatch('createMovieList', res.data)
+      })
+      .catch(res => {
+        console.log(res)
       })
   }
 }

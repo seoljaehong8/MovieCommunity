@@ -1,6 +1,6 @@
 <template>
-  <div class="container" style="cursor: pointer;" @click="routeDetailPage(review)">
-    <div class="row border-change">
+  <div class="container" >
+    <div class="row border-change" style="cursor: pointer;" @click="routeDetailPage(review)">
       <div class="offset-2 col-3">       
         <p class="movie-title">{{ review.movie_title }}</p>
         <br>

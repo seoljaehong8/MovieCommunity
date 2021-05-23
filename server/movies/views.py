@@ -3,13 +3,14 @@ from django.shortcuts import get_object_or_404, render, get_list_or_404
 import requests
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+from rest_framework import status
 import json
 from rest_framework.decorators import authentication_classes, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
-from . models import Movies
-from .serializers import MovieSerializer
+from . models import Movies, Rating
+from .serializers import MovieSerializer, RatingSerializer
 
 # Create your views here.
 # 데이터베이스에 영화 정보 저장하기
@@ -50,10 +51,11 @@ def make_movieData(request):
             vote_average = data['vote_average']
             vote_count = data['vote_count']
             popularity = data['popularity']
+            vote_score = int(vote_average * vote_count)
     
             movie = Movies(title=title,genre=genre_list,overview=overview,
                 poster_path=poster_path,release_date=release_date,vote_average=vote_average,
-                vote_count=vote_count,popularity=popularity)
+                vote_count=vote_count,popularity=popularity,vote_score=vote_score)
             movie.save()  
 
             # overview = data['overview']
@@ -114,3 +116,21 @@ def movie_detail(request,movie_pk):
     movie = get_object_or_404(Movies, pk=movie_pk)
     serializer = MovieSerializer(movie)
     return Response(serializer.data)
+
+@api_view(['POST','DELETE'])
+@authentication_classes([JSONWebTokenAuthentication])
+@permission_classes([IsAuthenticated])
+def create_rating(request,movie_rating_pk):
+    if request.method == 'POST':       
+        movie = get_object_or_404(Movies,pk=movie_rating_pk)
+        serializer = RatingSerializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save(user=request.user, movie=movie)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+    elif request.method == 'DELETE':
+        rating = get_object_or_404(Rating,pk=movie_rating_pk)
+        rating.delete()
+        data = {
+            'delete': f'{movie_rating_pk}번 평이 삭제되었습니다.',
+        }
+        return Response(data, status=status.HTTP_204_NO_CONTENT)
