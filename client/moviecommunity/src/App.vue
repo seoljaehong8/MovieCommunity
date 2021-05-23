@@ -21,8 +21,6 @@
 </template>
 
 <script>
-import axios from 'axios'
-
 const SERVER_URL = process.env.VUE_APP_SERVER_URL
 
 export default {
@@ -33,13 +31,6 @@ export default {
     }
   },
   methods: {
-    setToken: function () {
-      const token = localStorage.getItem('jwt')
-      const config = {
-        Authorization: `JWT ${token}`
-      }
-      return config
-    },
     logout: function () {
       this.isLogin = false
       localStorage.removeItem('jwt')
@@ -54,18 +45,6 @@ export default {
     } else {
       this.$router.push({ name: 'Login' })
     }
-
-    axios({
-      method: 'GET',
-      url: `${SERVER_URL}/reviews/`,
-      headers: this.setToken()
-    })
-      .then(res => {
-        this.$store.dispatch('createReviewList',res.data)
-      })
-      .catch(err => {
-        console.log(err)
-      })
   }
 }
 </script>
