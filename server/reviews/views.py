@@ -82,8 +82,7 @@ def comment_list_create(request,review_pk):
 @api_view(['PUT','DELETE'])
 @authentication_classes([JSONWebTokenAuthentication])
 @permission_classes([IsAuthenticated])
-def comment_delete_update(request,comment_pk):
-
+def comment_delete_update(request,review_pk,comment_pk):
     if request.method == 'DELETE':
         comment = get_object_or_404(Comment, pk=comment_pk)
         comment.delete()

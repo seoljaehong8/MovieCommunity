@@ -1,8 +1,8 @@
 <template>
   <div class="container" style="cursor: pointer;" @click="routeDetailPage(review)">
-    <div class="row">
+    <div class="row border-change">
       <div class="offset-2 col-3">       
-        <p class="movie-title">{{ movieTitle }}</p>
+        <p class="movie-title">{{ review.movie_title }}</p>
         <br>
         <a class="content-summury review-title">{{review.title}}</a>       
         <p class="content-summury review-content animate__animated animate__fadeInLeft">{{review.content}}</p>
@@ -69,7 +69,7 @@ export default {
 }
 
 .review-content {
-  color: white;
+  color: black;
   /* animation:  bounce;
   animation-duration: 2s;
   --animate-repeat: 2; */
@@ -85,5 +85,10 @@ export default {
   text-align: right;
 }
 
+.border-change {
+    border-radius: 30px;
+    background-color: #F6F6F6;
+    margin: 0 auto;
+}
 
 </style>
