@@ -6,8 +6,8 @@
         <br>
         <a class="content-summury review-title">{{review.title}}</a>       
         <p class="content-summury review-content animate__animated animate__fadeInLeft">{{review.content}}</p>
-        <p class="writer">작성자 : {{ username }}</p>        
         <!-- <p>작성시간 : {{ review.created_at | moment('YYYY-MM-DD HH:mm:ss') }}</p> -->
+        <p class="writer">작성자 : {{ review.username }}</p>        
         <p class="date">{{ review.updated_at | moment('YYYY-MM-DD HH:mm:ss') }}</p>
       </div>
       
