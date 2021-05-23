@@ -21,7 +21,6 @@
 </template>
 
 <script>
-const SERVER_URL = process.env.VUE_APP_SERVER_URL
 
 export default {
   name: 'App',
