@@ -10,44 +10,43 @@
         <p class="writer">작성자 : {{ review.username }}</p>        
         <p class="date">{{ review.updated_at | moment('YYYY-MM-DD HH:mm:ss') }}</p>
       </div>
-      
+
       <div class="col-5">
-        <img :src="moviePosterPath" alt="">
+        <img :src="getMoviePosterPath" alt="" />
       </div>
 
-      <hr>  
+      <hr />
     </div>
-  </div>   
-  
+  </div>
 </template>
 
 <script>
 // import axios from "axios"
-import Vue from 'vue' 
-import vueMoment from 'vue-moment' 
+import Vue from "vue";
+import vueMoment from "vue-moment";
 
-Vue.use(vueMoment)
+Vue.use(vueMoment);
 
 // const SERVER_URL = process.env.VUE_APP_SERVER_URL
 
 export default {
-  name: 'ReviewListItem', 
+  name: "ReviewListItem",
 
   props: {
     review: Object,
   },
-  created: function() {
-    this.moviePosterPath = `https://image.tmdb.org/t/p/w200${this.review.poster_path}`
+  computed: {
+    getMoviePosterPath() {
+      return `https://image.tmdb.org/t/p/w200${this.review.poster_path}`;
+    },
   },
   methods: {
-    routeDetailPage: function(review) {
-      localStorage.setItem(`reviewId`, review.id)
-      this.$router.push({name: 'ReviewDetail'})
-    },    
-  }
-
-  
-}
+    routeDetailPage: function (review) {
+      localStorage.setItem(`reviewId`, review.id);
+      this.$router.push({ name: "ReviewDetail" });
+    },
+  },
+};
 </script>
 
 <style>
@@ -65,7 +64,6 @@ export default {
 .review-title {
   font-size: x-large;
   text-decoration: underline;
-
 }
 
 .review-content {

@@ -1,7 +1,9 @@
 <template>
   <div>
     {{ comment.content }} | 
-    {{ comment.user_name}}
+    {{ comment.user_name}} |
+    {{ comment.created_at | moment("YYYY-MM-DD HH:mm:ss") }} |
+    {{ comment.updated_at | moment("YYYY-MM-DD HH:mm:ss") }}
     <button @click="deleteComment">삭제</button>  
   </div>
 </template>

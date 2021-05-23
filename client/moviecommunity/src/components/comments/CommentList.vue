@@ -74,7 +74,8 @@ export default {
       headers: this.setToken(),
     })
       .then((res) => {
-        this.$store.dispatch("createCommentsList", res.date.comment_set);
+        this.$store.dispatch("createCommentsList", res.data.comment_set);
+        console.log('comment_set : ',res.data.comment_set)
         console.log(res);
       })
       .catch((err) => {

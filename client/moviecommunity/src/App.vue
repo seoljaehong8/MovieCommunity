@@ -21,6 +21,7 @@
 </template>
 
 <script>
+
 export default {
   name: 'App',
   data: function () {
@@ -33,7 +34,8 @@ export default {
       this.isLogin = false
       localStorage.removeItem('jwt')
       this.$router.push({ name: 'Login' })
-    }
+    },
+
   },
   created: function () {
     const token = localStorage.getItem('jwt')

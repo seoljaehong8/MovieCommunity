@@ -76,6 +76,9 @@ export default new Vuex.Store({
     }
   },
   getters: {
+    getReviewList: function(state) {
+      return state.reviews
+    },
     getDetailReview: (state) => (reviewId) => {
       return state.reviews.find(review => review.id === Number(reviewId))
     },

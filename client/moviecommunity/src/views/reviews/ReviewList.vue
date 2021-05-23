@@ -1,70 +1,77 @@
-<template>  
+<template>
   <div>
     <div>
       <button type="button" class="btn btn-light">
-        <router-link :to="{ name: 'ReviewForm' }" class="a-tag">리뷰 작성</router-link>
+        <router-link :to="{ name: 'ReviewForm' }" class="a-tag"
+          >리뷰 작성</router-link
+        >
       </button>
     </div>
-    
-    <div class="review-list">
-      <ReviewListItem v-for="(review,idx) in reviews" 
-      :key="idx"
-      :review="review" />
+
+    <div class="review-list" v-if="reviews">
+      <ReviewListItem
+        v-for="(review, idx) in reviews"
+        :key="idx"
+        :review="review"
+      />
     </div>
   </div>
 </template>
 
 <script>
-import axios from 'axios'
-import _ from 'lodash'
+import axios from "axios";
+import _ from "lodash";
 // import { mapState } from 'vuex'
 
-import ReviewListItem from '@/components/reviews/ReviewListItem.vue'
+import ReviewListItem from "@/components/reviews/ReviewListItem.vue";
 
-const SERVER_URL = process.env.VUE_APP_SERVER_URL
+const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 
 export default {
-  name: 'ReviewList',
+  name: "ReviewList",
   components: {
     ReviewListItem,
   },
   computed: {
-    reviews: function() {
-      // console.log(this.$store.state.reviews)
-      return _.orderBy(this.$store.state.reviews,['created_at'],['desc'])
+    reviews: function () {
+      return _.orderBy(
+        this.$store.getters.getReviewList,
+        ["created_at"],
+        ["desc"]
+      );
     },
   },
   methods: {
     setToken: function () {
-      const token = localStorage.getItem('jwt')
+      const token = localStorage.getItem("jwt");
       const config = {
-        Authorization: `JWT ${token}`
-      }
-      return config
+        Authorization: `JWT ${token}`,
+      };
+      return config;
     },
   },
-  created: function() {    
+  created: function () {
     axios({
-      method: 'GET',
+      method: "GET",
       url: `${SERVER_URL}/reviews/`,
-      headers: this.setToken()
+      headers: this.setToken(),
     })
-      .then(res => {
-        this.$store.dispatch('createReviewList',res.data)
+      .then((res) => {
+        this.$store.dispatch("createReviewList", res.data);
       })
-      .catch(err => {
-        console.log(err)
-      })
-  }
-}
+      .catch((err) => {
+        console.log(err);
+      });
+  },
+};
 </script>
 
 <style>
-  .a-tag{
-    text-decoration: none;
-  }
+.a-tag {
+  text-decoration: none;
+}
 
-  .review-list {
-    margin-top: 50px;
-  }
+.review-list {
+  margin-top: 50px;
+}
 </style>
