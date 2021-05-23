@@ -34,13 +34,14 @@
 </template>
 
 <script>
-import Vue from "vue";
-import vueMoment from "vue-moment";
+// import Vue from "vue";
+// import vueMoment from "vue-moment";
+// Vue.use(vueMoment);
+
 import axios from "axios";
 
 import CommentList from "@/components/comments/CommentList.vue";
 
-Vue.use(vueMoment);
 const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 
 export default {
@@ -99,7 +100,7 @@ export default {
     },
     deleteReview: function () {
       const reviewId = this.review.id;
-      this.$store.dispatch("deleteReview", this.review);
+      // this.$store.dispatch("deleteReview", this.review);
       axios({
         method: "DELETE",
         url: `${SERVER_URL}/reviews/${reviewId}/`,

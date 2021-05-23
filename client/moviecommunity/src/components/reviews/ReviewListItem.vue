@@ -1,53 +1,62 @@
 <template>
-  <div class="container" style="cursor: pointer;" @click="routeDetailPage(review)">
-    <div class="row" style="background-color:lightgray;">
-      <div class="offset-2 col-3">       
+  <div
+    class="container"
+    style="cursor: pointer"
+    @click="routeDetailPage(review)"
+  >
+    <div class="row" style="background-color: lightgray">
+      <div class="offset-2 col-3">
         <p class="movie-title">{{ review.movie_title }}</p>
-        <br>
-        <a class="content-summury review-title">{{review.title}}</a>       
-        <p class="content-summury review-content animate__animated animate__fadeInLeft">{{review.content}}</p>
-        <p class="writer">작성자 : {{ review.user_name }}</p>        
+        <br />
+        <a class="content-summury review-title">{{ review.title }}</a>
+        <p
+          class="content-summury review-content animate__animated animate__fadeInLeft"
+        >
+          {{ review.content }}
+        </p>
+        <p class="writer">작성자 : {{ review.user_name }}</p>
         <!-- <p>작성시간 : {{ review.created_at | moment('YYYY-MM-DD HH:mm:ss') }}</p> -->
-        <p class="date">{{ review.updated_at | moment('YYYY-MM-DD HH:mm:ss') }}</p>
-      </div>
-      
-      <div class="col-5">
-        <img :src="moviePosterPath" alt="">
+        <p class="date">
+          {{ review.updated_at | moment("YYYY-MM-DD HH:mm:ss") }}
+        </p>
       </div>
 
-      <hr>  
+      <div class="col-5">
+        <img :src="getMoviePosterPath" alt="" />
+      </div>
+
+      <hr />
     </div>
-  </div>   
-  
+  </div>
 </template>
 
 <script>
 // import axios from "axios"
-import Vue from 'vue' 
-import vueMoment from 'vue-moment' 
+import Vue from "vue";
+import vueMoment from "vue-moment";
 
-Vue.use(vueMoment)
+Vue.use(vueMoment);
 
 // const SERVER_URL = process.env.VUE_APP_SERVER_URL
 
 export default {
-  name: 'ReviewListItem', 
+  name: "ReviewListItem",
 
   props: {
     review: Object,
   },
-  created: function() {
-    this.moviePosterPath = `https://image.tmdb.org/t/p/w200${this.review.poster_path}`
+  computed: {
+    getMoviePosterPath() {
+      return `https://image.tmdb.org/t/p/w200${this.review.poster_path}`;
+    },
   },
   methods: {
-    routeDetailPage: function(review) {
-      localStorage.setItem(`reviewId`, review.id)
-      this.$router.push({name: 'ReviewDetail'})
-    },    
-  }
-
-  
-}
+    routeDetailPage: function (review) {
+      localStorage.setItem(`reviewId`, review.id);
+      this.$router.push({ name: "ReviewDetail" });
+    },
+  },
+};
 </script>
 
 <style>
@@ -65,7 +74,6 @@ export default {
 .review-title {
   font-size: x-large;
   text-decoration: underline;
-
 }
 
 .review-content {
@@ -84,6 +92,4 @@ export default {
   /* display: inline-block; */
   text-align: right;
 }
-
-
 </style>
