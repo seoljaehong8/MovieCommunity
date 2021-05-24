@@ -98,6 +98,9 @@ export default new Vuex.Store({
     }
   },
   getters: {
+    getMovieList: function(state){
+      return state.movies
+    },
     getReviewList: function(state) {
       return state.reviews
     },
@@ -109,6 +112,11 @@ export default new Vuex.Store({
     },
     getRatingList: function(state) {
       return state.ratings
+    },
+    getMovieOfGenre: (state) => (genre) => {
+      return state.movies.filter( movie => {
+        return movie.genre.includes(genre)
+      })
     }
   },
   modules: {

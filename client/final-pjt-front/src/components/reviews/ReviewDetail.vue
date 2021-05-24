@@ -26,6 +26,10 @@
             <button @click="changeIsUpdate">수정</button>
             <button @click="deleteReview">삭제</button>
           </div>
+          <div v-else>
+            <h2>글 제목 : {{ review.title }}</h2>
+            <h2>내용 : {{ review.content }}</h2>
+          </div>
         </div>
       </div>
 

@@ -1,21 +1,17 @@
 <template>
-  <div class="container">
-    <h1> MOVIE </h1>
-    <div class="row">
-      <MovieListItem 
-        v-for="(movie,idx) in movies" 
-        :key="idx"
-        :movie="movie"/>
-    </div>    
+  <div >
+    <MovieListItem :movies="movies"/>  
+    <MovieOfEachGenre v-for="(genre,idx) in genreList" 
+    :key="idx"
+    :genre="genre"/>
   </div>
 </template>
 
 
 <script>
 import MovieListItem from '@/components/movies/MovieListItem.vue'
+import MovieOfEachGenre from '@/components/movies/MovieOfEachGenre.vue'
 import axios from 'axios'
-import { mapState } from 'vuex'
-
 
 const SERVER_URL = process.env.VUE_APP_SERVER_URL
 
@@ -23,12 +19,21 @@ export default {
   name: 'MovieList',
   components: {
     MovieListItem,
+    MovieOfEachGenre
     // PaginationItem,
   },
   computed: {
-    ...mapState([
-      'movies',
-    ])
+    movies: function() {
+      return this.$store.getters.getMovieList.slice(0,30)
+    },
+    genreList: function() {
+      const genreList = [
+        '액션','어드벤처','애니메이션','범죄','다큐멘터리','드라마',
+        '가족','판타지','역사','공포','음악','미스테리','로맨스',
+        'SF','스릴러','전쟁','서부'
+      ]
+      return genreList
+    }
   },
   methods: {
     setToken: function () {
@@ -39,6 +44,7 @@ export default {
       return config
     },
   },
+
   created: function() {
     axios({
       method: 'GET',

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="text-start" style="color:white;"> 인기순 </h1>
+    <h1 class="text-start" style="color:white;"> {{genre}} </h1>
     <div>
       <carousel :items="8" :nav="true" :dots="false" class="marginTop50">
         <div v-for="(movie,idx) in movies" :key="idx">
@@ -31,12 +31,17 @@
 import carousel from 'vue-owl-carousel'
 
 export default {
-  name: 'MovieListItem',
+  name: 'MovieOfEachGenre',
   components:{
     carousel
   },
   props: {
-    movies: Array,
+    genre: String,
+  },
+  data: function() {
+    return {
+      movies: null,
+    }
   },
   methods: {
     getPosterUrl: function(movie) {
@@ -51,37 +56,13 @@ export default {
       localStorage.setItem(`movieId`, movie.id)
       this.$router.push({name:'movieDetail'})
     }
-  }
+  },
+  created: function() {
+    this.movies = this.$store.getters.getMovieOfGenre(this.genre).slice(0,30)
+  },
 }
 </script>
 
 <style>
-.star-ratings {
-  color: #aaa9a9; 
-  position: relative;
-  unicode-bidi: bidi-override;
-  width: max-content;
-  -webkit-text-fill-color: transparent; /* Will override color (regardless of order) */
-  -webkit-text-stroke-width: 1.3px;
-  -webkit-text-stroke-color: #2b2a29;
-}
- 
-.star-ratings-fill {
-  font-size: 30px;
-  color: #fff58c;
-  padding: 0;
-  position: absolute;
-  z-index: 1;
-  display: flex;
-  top: 0;
-  left: 0;
-  overflow: hidden;
-  -webkit-text-fill-color: gold;
-}
- 
-.star-ratings-base {
-  font-size: 30px;
-  z-index: 0;
-  padding: 0;
-}
+
 </style>
