@@ -27,7 +27,7 @@
                 :animate="true"
                 :star-size="50"
                 :rounded-corners="true"
-                :border-width="7"
+                :border-width="4"
                 :increment="0.5"
                 :glow="10" glow-color="#ffd055"                      
                 v-model="rating"

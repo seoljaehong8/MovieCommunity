@@ -20,10 +20,12 @@
           <button @click="updateReview">수정</button>
         </div>
         <div v-else>
-          <h2>글 제목 : {{ review.title }}</h2>
-          <h2>내용 : {{ review.content }}</h2>
-          <button @click="changeIsUpdate">수정</button>
-          <button @click="deleteReview">삭제</button>
+          <div v-if="isMine">
+            <h2>글 제목 : {{ review.title }}</h2>
+            <h2>내용 : {{ review.content }}</h2>
+            <button @click="changeIsUpdate">수정</button>
+            <button @click="deleteReview">삭제</button>
+          </div>
         </div>
       </div>
 
@@ -34,12 +36,17 @@
 </template>
 
 <script>
-// import Vue from "vue";
-// import vueMoment from "vue-moment";
-// Vue.use(vueMoment);
+import jwt_decode from 'jwt-decode'
+
 import axios from "axios";
 import CommentList from "@/components/comments/CommentList.vue";
+
 const SERVER_URL = process.env.VUE_APP_SERVER_URL;
+
+const token = localStorage.getItem('jwt')
+const decoded = jwt_decode(token)
+const username = decoded.username
+
 export default {
   name: "ReviewDetail",
   data: function () {
@@ -54,6 +61,11 @@ export default {
   },
   components: {
     CommentList,
+  },
+  computed: {
+    isMine: function() {
+      return username === this.review.user_name
+    }
   },
   methods: {
     setToken: function () {

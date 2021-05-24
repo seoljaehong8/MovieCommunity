@@ -41,7 +41,7 @@ export default {
     const token = localStorage.getItem('jwt')
     if (token) {
       this.isLogin = true
-    } else {
+    } else if(this.$route.path !== '/accounts/login') {
       this.$router.push({ name: 'Login' })
     }
   }
