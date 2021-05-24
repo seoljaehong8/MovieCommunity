@@ -81,22 +81,8 @@ export default {
         ? this.rating*2 + " 점을 선택하셨습니다."
         : "No rating selected";
     },
-    mouseOverRatingText() {
-      return this.mouseOverRating
-        ? "Click to select " + this.mouseOverRating + " stars"
-        : "No Rating";
-    },
   },
   methods: {
-    showCurrentRating(rating) {
-      this.currentSelectedRating =
-        rating === 0
-          ? this.currentSelectedRating
-          : "Click to select " + rating + " stars";
-    },
-    setCurrentSelectedRating(rating) {
-      this.currentSelectedRating = "You have Selected: " + rating + " stars";
-    },
     setToken: function () {
       const token = localStorage.getItem('jwt')
       const config = {
@@ -117,6 +103,7 @@ export default {
         data: data
       })
         .then(res=>{
+          this.$store.dispatch('createRating', res.data)
           console.log(res)
         })
         .catch(err=>{

@@ -14,22 +14,31 @@
     <h3>별점 : {{rating.grade}}</h3>
     <h3>작성자 : {{rating.user_name}}</h3>
     <h3>내용 : {{rating.content}}</h3>
-    <button @click="deleteRating">삭제</button>
+    <button v-if="isMine" @click="deleteRating">삭제</button>
     <hr>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
+import jwt_decode from 'jwt-decode'
 
 const SERVER_URL = process.env.VUE_APP_SERVER_URL
+
+const token = localStorage.getItem('jwt')
+const decoded = jwt_decode(token)
+const username = decoded.username
 
 export default {
   name: 'RatingListItem',
   props:{
     rating: Object,
   },
-
+  computed: {
+    isMine: function() {
+      return username === this.rating.user_name
+    }
+  },
   methods: {
     ratingToPercent: function() {
       const score = this.rating.grade
@@ -43,6 +52,7 @@ export default {
       return config
     },
     deleteRating: function() {
+      this.$store.dispatch('deleteRating',this.rating)
       axios({
         method: 'DELETE',
         url : `${SERVER_URL}/movies/rating/${this.rating.id}/`,

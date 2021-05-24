@@ -10,6 +10,7 @@
         <router-link @click.native="logout" to="#">Logout</router-link> |
         <router-link :to="{ name: 'MovieList' }">Movie</router-link> |
         <router-link :to="{ name: 'ReviewList' }">Review</router-link> |
+        <router-link :to="{ name: 'Recommend' }">Recommend</router-link> 
       </span>
       <span v-else>
         

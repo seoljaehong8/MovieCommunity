@@ -12,6 +12,7 @@ export default new Vuex.Store({
     movies: [],
     reviews: [],
     comments: [],
+    ratings: [],
   },
   mutations: {
     CREATE_MOVIE_LIST: function (state, movieList) {
@@ -38,6 +39,16 @@ export default new Vuex.Store({
     },
     DELETE_COMMENT: function(state,index) {
       state.comments.splice(index,1)
+    },
+
+    CREATE_RATING_LIST: function(state,ratings){
+      state.ratings = ratings
+    },
+    CREATE_RATING: function(state,rating){
+      state.ratings.push(rating)
+    },
+    DELETE_RATING: function(state, index){
+      state.ratings.splice(index,1)
     }
   },
   actions: {
@@ -73,6 +84,17 @@ export default new Vuex.Store({
     deleteComment: function(context, comment){
       const index = context.state.comments.indexOf(comment)
       context.commit('DELETE_COMMENT',index)
+    },
+
+    createRatingList: function(context, ratings){
+      context.commit('CREATE_RATING_LIST', ratings)
+    },
+    createRating: function(context, rating) {
+      context.commit('CREATE_RATING',rating)
+    },
+    deleteRating: function(context,rating) {
+      const index = context.state.ratings.indexOf(rating)
+      context.commit("DELETE_RATING",index)
     }
   },
   getters: {
@@ -84,6 +106,9 @@ export default new Vuex.Store({
     },
     getComments: function(state) {
       return state.comments
+    },
+    getRatingList: function(state) {
+      return state.ratings
     }
   },
   modules: {

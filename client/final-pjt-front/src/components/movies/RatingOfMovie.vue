@@ -12,6 +12,7 @@
 <script>
 import RatingForm from '@/components/ratings/RatingForm.vue'
 import RatingListItem from '@/components/ratings/RatingListItem.vue'
+import _ from 'lodash'
 
 export default {
   name: "RatingOfMovie",
@@ -24,10 +25,11 @@ export default {
   },
   computed: {
     getRating: function() {
-      return this.movie.rating_set
+      return _.orderBy(this.$store.getters.getRatingList,['created_at'],['desc'])
     }
   },
   created: function() {
+    this.$store.dispatch('createRatingList',this.movie.rating_set)
     console.log(this.movie)
   }
 };
