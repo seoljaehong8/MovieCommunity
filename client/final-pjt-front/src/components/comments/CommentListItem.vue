@@ -1,10 +1,17 @@
 <template>
-  <div>
-    {{ comment.content }} | 
-    {{ comment.user_name}} |
-    {{ comment.created_at | moment("YYYY-MM-DD HH:mm:ss") }} |
-    {{ comment.updated_at | moment("YYYY-MM-DD HH:mm:ss") }}
-    <button class="btn btn-outline-info" v-if="isMine" @click="deleteComment">삭제</button>  
+  <div class="container">
+    <div id="comment" class="row my-2">
+      <div class="col-3">
+        {{ comment.user_name}} |
+      </div>
+      <div class="col-6 text-start">
+        {{ comment.content }} 
+      </div>
+      <div class="col-3">
+        | {{ comment.created_at | moment("YYYY-MM-DD HH:mm:ss") }} 
+        <button class="btn btn-outline-danger" v-if="isMine" @click="deleteComment">삭제</button>  
+      </div>
+    </div>
   </div>
 </template>
 
@@ -62,6 +69,10 @@ export default {
 } 
 </script>
 
-<style>
-
+<style scoped>
+#comment{
+  /* background-color: lightgray; */
+  color:lightgray;
+  height: 60px;
+}
 </style>

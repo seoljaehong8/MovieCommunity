@@ -1,41 +1,54 @@
 <template>
   <div v-if="review" class="container">
     <div class="row">
-      <div class="offset-2 col-3">
+      <div class="offset-3 col-2">
         <img :src="posterPath" alt="" />
       </div>
-      <div class="col-5">
-        <h1>영화제목 : {{ review.movie_title }}</h1>
-        <p class="info">작성자 : {{ review.user_name }}</p>
-        <p class="info">
-          작성시간 : {{ review.created_at | moment("YYYY-MM-DD HH:mm:ss") }}
-        </p>
-        <p class="info">
-          수정시간 : {{ review.updated_at | moment("YYYY-MM-DD HH:mm:ss") }}
-        </p>
-        <br>
+      <div class="col-4">
+        <div class="row" style="color:lightgray">
+          <h1>{{ review.movie_title }}</h1>
+        </div>
+        <div id="review-info" class="row">
+          <p class="info">작성자 : {{ review.user_name }}</p>
+          <p class="info">
+            작성시간 : {{ review.created_at | moment("YYYY-MM-DD HH:mm:ss") }}
+          </p>
+          <p class="info">
+            수정시간 : {{ review.updated_at | moment("YYYY-MM-DD HH:mm:ss") }}
+          </p>
+          <div v-if="isMine" class="offset-6 col-3">
+            <button class="btn btn-outline-info" @click="changeIsUpdate">수정</button>
+          </div>
+          <div v-if="isMine" class="col-3">
+            <button class="btn btn-outline-danger" @click="deleteReview">삭제</button>
+          </div>
+        </div>
+        <br>        
+      </div>
+      <hr>
+    </div>
+    <div class="row">
+      <div class="col">
         <div v-if="isUpdate">
-          <input v-model="updateTitle" type="text" />
-          <input v-model="updateContent" type="text" />
+          <textarea cols="50" rows="2" v-model="updateTitle" type="text"></textarea>
+          <br>
+          <textarea cols="50" rows="10" v-model="updateContent" type="text"></textarea>
           <br />
-          <button @click="updateReview">수정</button>
+          <button @click="updateReview" class="btn btn-outline-info">수정완료</button>
         </div>
         <div v-else>
           <div v-if="isMine" class="review-detail">
-            <h2>글 제목 : {{ review.title }}</h2>
-            <p>내용 : {{ review.content }}</p>
-            <button class="btn btn-info" @click="changeIsUpdate">수정</button>
-            <button class="btn btn-warning" @click="deleteReview">삭제</button>
+            <h2 class="review-title">{{ review.title }}</h2>
+            <p>{{ review.content }}</p>            
           </div>
-          <div v-else>
-            <h2>글 제목 : {{ review.title }}</h2>
-            <h2>내용 : {{ review.content }}</h2>
+          <div v-else class="review-detail">
+            <h2 class="review-title">{{ review.title }}</h2>
+            <h2>{{ review.content }}</h2>
           </div>
         </div>
       </div>
-
-      <hr>
     </div>
+    <hr>
     <CommentList :reviewId="this.review.id" />
   </div>
 </template>
@@ -164,11 +177,36 @@ export default {
 
 .review-detail {
     margin: 0 auto;
-    width: 500px;
-    padding: 30px;
+    width: 800px;
+    padding: 30px 90px;
     border-radius: 30px;
-    background-color: #F6F6F6;
+    /* background-color: #F6F6F6; */
+    background-color: #e6e6e6;
     font-family: 'Noto Sans KR', sans-serif;
+    color: black;
+}
+#review-info{
+  margin-top:120px;
+}
+
+.offset-6 {
+  padding-left:50px;
+  padding-right:0px;
+}
+
+.offset-6 > .col-3 {
+  padding: 0px;
+}
+
+.review-title{
+  text-decoration: underline;
+  font-style: italic;
+  margin-bottom: 30px;
+}
+textarea{
+  border-radius: 10px;
+  background-color: #f3f3f3;
+  padding: 10px 10px;
 }
 
 </style>

@@ -147,41 +147,41 @@ export default {
   z-index: 1;
 }
 .fill_1::after {
-  background: lightcoral;
+  background: rgb(160,103,173);
 }
 .fill_2 {
   transform: rotate(60deg);
 }
 .fill_2::after {
-  background: lightgreen;
+  background: rgb(140,227,061)
 }
 .fill_3 {
   transform: rotate(120deg);
 }
 .fill_3::after {
-  background: lightblue;
+  background: rgb(070,163,210)
 }
 .fill_4 {
   transform: rotate(180deg);
 }
 .fill_4::after {
-  background: lightgray;
+  background: rgb(140,227,061)
 }
 .fill_5 {
   transform: rotate(240deg);
 }
 .fill_5::after {
-  background: lightsalmon;
+  background: rgb(160,103,173);
 }
 .fill_6 {
   transform: rotate(300deg);
 }
 .fill_6::after {
-  background: lightseagreen;
+  background:rgb(070,163,210)
 }
 .content {
   z-index: 1;
-
+  color:rgb(255, 255, 255);
   font-size: 20px;
   font-weight: bold;
   padding-top: 40px;
@@ -276,5 +276,9 @@ export default {
   font-size: 30px;
   z-index: 0;
   padding: 0;
+}
+img:hover {
+  transform:scale(1.15);
+  transition: transform.3s; 
 }
 </style>

@@ -10,9 +10,9 @@
             {{ review.created_at | moment("YYYY-MM-DD HH:mm:ss") }}
           </div>
         </div>
-        <div class="row" style="color:white;">
-          <h2 style="text-decoration:underline">{{ review.title }}</h2>
-          <h5>{{ review.content }}</h5>
+        <div class="row">
+          <h2>{{ review.title }}</h2>
+          <h5 class="content">{{ review.content }}</h5>
         </div>
       </div>
       <div class="col-3">
@@ -46,6 +46,21 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+h2{
+  color:white;
+  text-decoration: underline;
+}
+h5{
+  color:lightgray;
+}
+.content{
+  overflow: hidden; text-overflow: 
+  ellipsis; display: -webkit-box; 
+  -webkit-line-clamp: 2; 
+  -webkit-box-orient: vertical; 
+  word-wrap:break-word; 
+  line-height: 1.2em; 
+  height: 2.4em;
+}
 </style>

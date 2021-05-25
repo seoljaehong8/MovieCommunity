@@ -72,5 +72,9 @@ export default {
 </script>
 
 <style scoped>
-
+img:hover {
+  transform:scale(1.15);
+  transition: transform.3s; 
+  z-index:10;
+}
 </style>

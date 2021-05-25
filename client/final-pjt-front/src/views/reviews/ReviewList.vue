@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div>
+    <div id="createButton">
       <button type="button" class="btn btn-light">
         <router-link :to="{ name: 'ReviewForm' }" class="a-tag"
           >리뷰 작성</router-link
@@ -75,8 +75,9 @@ export default {
   margin-top: 50px;
 }
 
-/* img:hover {
-  transform:scale(1.5);
-  /* transition: transform.3s; 
-} */
+#createButton {
+  text-align: right;
+  padding-right:600px;
+}
+
 </style>

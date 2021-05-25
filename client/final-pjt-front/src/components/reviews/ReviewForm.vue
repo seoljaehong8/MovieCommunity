@@ -1,45 +1,55 @@
 <template>
-  <div>
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-      영화선택
-    </button>
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <button type="button" class="btn btn-outline-primary mb-5" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          영화선택
+        </button>
 
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">영화선택</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <input v-model="search" @keydown.enter="searchMovie" type="text" placeholder="movie_title">
-            <button @click="searchMovie">검색</button>
-            <br>
-            <div v-for="(movie,idx) in movies" :key="idx">
-              <div class="select-title" data-bs-dismiss="modal" @click="clickSelectTitle(movie)">
-                <img :src="getMoviePosterUrl(movie)" width="100" alt="movieImg">
-                {{ movie.title }}
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">영화선택</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <input v-model="search" @keydown.enter="searchMovie" type="text" placeholder="movie_title">
+                <button @click="searchMovie">검색</button>
+                <br>
+                <p v-if="selectedMovie">총 {{movies.length}}개가 검색되었습니다.</p>
+                <div v-for="(movie,idx) in movies" :key="idx">
+                  <div class="select-title" data-bs-dismiss="modal" @click="clickSelectTitle(movie)">
+                    <img :src="getMoviePosterUrl(movie)" width="100" alt="movieImg">
+                    {{ movie.title }}
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
               </div>
             </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
           </div>
         </div>
       </div>
     </div>
-    <h1>Review Form</h1>
-    <div v-if="selectedMovie">
-      <img :src="getMoviePosterUrl(selectedMovie)" alt="">
-      {{ selectedMovie.title }}
+    <div class="row" style="height:700px;">
+      <div class="offset-2 col-4">
+        <div v-if="selectedMovie">
+          <img :src="getMoviePosterUrl(selectedMovie)" alt="">
+        </div>
+        <div v-else>
+          <h1 data-bs-toggle="modal" data-bs-target="#exampleModal">영화를 선택해 주세요!!</h1>  
+        </div> 
+      </div>
+      <div class="col-5 text-start">
+        <textarea id="title" v-model="title" placeholder="title" cols="50" rows="3"></textarea>
+        <textarea id="content" cols="50" rows="20" v-model="content" placeholder="content" ></textarea> 
+        <br>
+        <button class="btn btn-secondary mt-3" @click="createReview">작성</button>
+      </div>
     </div>
     
-    <br>
-    <input v-model="title" type="text" placeholder="title">
-    <br>
-    <input v-model="content" type="text" placeholder="content">
-    <br>
-    <button @click="createReview">작성</button>
   </div>
 </template>
 
@@ -102,7 +112,7 @@ export default {
     // 선택한 영화 포스터 url 불러오기
     getMoviePosterUrl: function(movie) {
       const posterPath = movie.poster_path
-      const url = `https://image.tmdb.org/t/p/w200${posterPath}`
+      const url = `https://image.tmdb.org/t/p/w300${posterPath}`
       return url
     },
 
@@ -113,5 +123,41 @@ export default {
 <style scoped>
   .select-title {
     cursor: pointer;
+    text-align: left;
+    margin-bottom: 10px;
+  }
+  .select-title:hover {
+    background-color: rgb(216, 216, 196);
+  }
+  textarea{
+    border-radius: 15px;
+    padding-left:10px;
+    padding-top:10px;
+  }
+  #content{
+    height:300px;
+    margin-top:20px;
+  }
+  #title{
+    height:50px;
+  }
+  h1 {
+    cursor: pointer;
+    padding-top:180px;
+    color: white;
+    font-style: italic;
+    animation-name: bounce;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+  }
+  h1:hover{
+    color:lightskyblue;
+    text-decoration: underline;
+  }
+  p{
+    text-align: left;
+    margin-top:10px;
+    font-size: 20px;
+    font-weight: bold;
   }
 </style>
