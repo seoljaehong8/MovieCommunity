@@ -2,7 +2,8 @@
   <div>
     <h1>댓글</h1>
     <input v-model="content" @keydown.enter="createComment" type="text" />
-    <button @click="createComment">작성</button>
+    <button class="input-text" @click="createComment">작성</button>
+    <hr>
     <CommentListItem v-for="(comment, idx) in comments" :key="idx"
       :comment="comment"
       :reviewId="reviewId"/>
@@ -86,4 +87,7 @@ export default {
 </script>
 
 <style>
+.input-text {
+  border: 1px solid #eaeaea;
+}
 </style>

@@ -74,4 +74,9 @@ export default {
 .review-list {
   margin-top: 50px;
 }
+
+/* img:hover {
+  transform:scale(1.5);
+  /* transition: transform.3s; 
+} */
 </style>

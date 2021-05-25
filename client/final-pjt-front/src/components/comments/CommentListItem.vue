@@ -4,7 +4,7 @@
     {{ comment.user_name}} |
     {{ comment.created_at | moment("YYYY-MM-DD HH:mm:ss") }} |
     {{ comment.updated_at | moment("YYYY-MM-DD HH:mm:ss") }}
-    <button v-if="isMine" @click="deleteComment">삭제</button>  
+    <button class="btn btn-outline-info" v-if="isMine" @click="deleteComment">삭제</button>  
   </div>
 </template>
 
@@ -14,10 +14,12 @@ import jwt_decode from 'jwt-decode'
 
 const token = localStorage.getItem('jwt')
 let username = ''
-if (token) {
+if (token){
   const decoded = jwt_decode(token)
   username = decoded.username
-} 
+} else{
+  username = 'user'
+}
 
 const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 

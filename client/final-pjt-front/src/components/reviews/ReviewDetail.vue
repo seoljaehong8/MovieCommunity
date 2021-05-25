@@ -6,13 +6,14 @@
       </div>
       <div class="col-5">
         <h1>영화제목 : {{ review.movie_title }}</h1>
-        <h2>작성자 : {{ review.user_name }}</h2>
-        <h2>
+        <p class="info">작성자 : {{ review.user_name }}</p>
+        <p class="info">
           작성시간 : {{ review.created_at | moment("YYYY-MM-DD HH:mm:ss") }}
-        </h2>
-        <h2>
+        </p>
+        <p class="info">
           수정시간 : {{ review.updated_at | moment("YYYY-MM-DD HH:mm:ss") }}
-        </h2>
+        </p>
+        <br>
         <div v-if="isUpdate">
           <input v-model="updateTitle" type="text" />
           <input v-model="updateContent" type="text" />
@@ -20,11 +21,11 @@
           <button @click="updateReview">수정</button>
         </div>
         <div v-else>
-          <div v-if="isMine">
+          <div v-if="isMine" class="review-detail">
             <h2>글 제목 : {{ review.title }}</h2>
-            <h2>내용 : {{ review.content }}</h2>
-            <button @click="changeIsUpdate">수정</button>
-            <button @click="deleteReview">삭제</button>
+            <p>내용 : {{ review.content }}</p>
+            <button class="btn btn-info" @click="changeIsUpdate">수정</button>
+            <button class="btn btn-warning" @click="deleteReview">삭제</button>
           </div>
           <div v-else>
             <h2>글 제목 : {{ review.title }}</h2>
@@ -49,10 +50,12 @@ const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 
 const token = localStorage.getItem('jwt')
 let username = ''
-if (token) {
+if (token){
   const decoded = jwt_decode(token)
   username = decoded.username
-} 
+} else{
+  username = 'user'
+}
 
 export default {
   name: "ReviewDetail",
@@ -153,5 +156,19 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+
+.info {
+  text-align: right;
+}
+
+.review-detail {
+    margin: 0 auto;
+    width: 500px;
+    padding: 30px;
+    border-radius: 30px;
+    background-color: #F6F6F6;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
 </style>

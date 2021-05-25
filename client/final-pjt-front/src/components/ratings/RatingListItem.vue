@@ -46,10 +46,12 @@ const SERVER_URL = process.env.VUE_APP_SERVER_URL
 
 const token = localStorage.getItem('jwt')
 let username = ''
-if (token) {
+if (token){
   const decoded = jwt_decode(token)
   username = decoded.username
-} 
+} else{
+  username = 'user'
+}
 
 export default {
   name: 'RatingListItem',
