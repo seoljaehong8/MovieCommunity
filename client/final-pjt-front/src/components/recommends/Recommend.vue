@@ -30,7 +30,7 @@
           <button @click="onClickTrigger" class="trigger">다시</button>
         </div>
         <div v-else style="padding-top:50px;">
-          <button @click="onClickTrigger" class="trigger">뽑기</button>
+          <button @click="onClickTrigger" class="trigger btn btn-outline-success">뽑기</button>
         </div>
       </div>
       <div class="col-6 my-5">

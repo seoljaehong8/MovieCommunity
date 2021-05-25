@@ -1,10 +1,15 @@
 <template>
   <div>
-    {{ comment.content }} | 
-    {{ comment.user_name}} |
+    <div class="comment-username">
+      작성자 : {{ comment.user_name }} 
+    </div>
+    <div class="comment-content">
+      {{ comment.content }} 
+    </div>
     {{ comment.created_at | moment("YYYY-MM-DD HH:mm:ss") }} |
     {{ comment.updated_at | moment("YYYY-MM-DD HH:mm:ss") }}
     <button class="btn btn-outline-info" v-if="isMine" @click="deleteComment">삭제</button>  
+    <hr>
   </div>
 </template>
 
@@ -62,6 +67,13 @@ export default {
 } 
 </script>
 
-<style>
+<style scoped>
+  .comment-username {
+    margin-right: 250px;
+  }
 
+  .comment-content {
+    font-weight: 600;
+    font-size: large;
+  }
 </style>
