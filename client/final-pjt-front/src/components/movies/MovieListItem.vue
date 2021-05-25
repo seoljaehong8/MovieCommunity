@@ -5,7 +5,10 @@
       <carousel :items="8" :nav="true" :dots="false" class="marginTop50">
         <div v-for="(movie,idx) in movies" :key="idx">
           <div class="card" @click="movieDetail(movie)" style="cursor:pointer; height:350px; background-color:black;">
-            <img :src="getPosterUrl(movie)" class="card-img-top" alt="...">
+            <div id="hov">
+              {{ movie.title }}
+            </div>
+            <img :src="getPosterUrl(movie)" class="card-img-top" id="image" alt="...">
             <!-- <div class="card-body">
               <h5 class="card-title">{{ movie.title }}</h5>
               <div class="star-ratings mx-auto">
@@ -55,7 +58,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .star-ratings {
   color: #aaa9a9; 
   position: relative;
@@ -84,4 +87,19 @@ export default {
   z-index: 0;
   padding: 0;
 }
+
+img:hover {
+  transform:scale(1.5);
+  /* transition: transform.3s; */
+}
+
+#hov {
+  display: none;
+}
+
+#image.hover + #hov {
+  display: inline;
+
+}
+
 </style>
