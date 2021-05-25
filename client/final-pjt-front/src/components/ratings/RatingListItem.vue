@@ -1,20 +1,39 @@
 <template>
-  <div>
-    <div class="star-ratings">
-      <div 
-        class="star-ratings-fill space-x-2 text-lg"
-        :style="{ width: ratingToPercent() + '%' }"
-      >
-        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+  <div class="container">
+    <div class="row pt-3">
+      <div class="offset-1 col-2">
+        <div class="star-ratings">
+          <div 
+            class="star-ratings-fill space-x-2 text-lg"
+            :style="{ width: ratingToPercent() + '%' }"
+          >
+            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+          </div>
+          <div class="star-ratings-base space-x-2 text-lg">
+            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+          </div>
+        </div>
+        <p>{{rating.grade/10}}</p>
       </div>
-      <div class="star-ratings-base space-x-2 text-lg">
-        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+      <div class="col-8 text-start">
+        <span>
+          <h3 style="color:white;">{{rating.content}}</h3>
+          <div class="row">
+            <div class="col-1 ms-1 me-3">
+              {{rating.user_name}} 
+            </div>
+            <div class="col-5 ms-2">
+              | {{rating.created_at | moment("YYYY-MM-DD HH:mm:ss")}}
+            </div>
+            <div class="offset-3 col-2 text-end">
+              <p v-if="isMine" @click="deleteRating">삭제</p>
+            </div>
+          </div>
+          <!-- <button style="margin-left:500px;" v-if="isMine" @click="deleteRating">삭제</button> -->
+        </span>
       </div>
+      
     </div>
-    <h3>별점 : {{rating.grade}}</h3>
-    <h3>작성자 : {{rating.user_name}}</h3>
-    <h3>내용 : {{rating.content}}</h3>
-    <button v-if="isMine" @click="deleteRating">삭제</button>
     <hr>
   </div>
 </template>
@@ -26,8 +45,11 @@ import jwt_decode from 'jwt-decode'
 const SERVER_URL = process.env.VUE_APP_SERVER_URL
 
 const token = localStorage.getItem('jwt')
-const decoded = jwt_decode(token)
-const username = decoded.username
+let username = ''
+if (token) {
+  const decoded = jwt_decode(token)
+  username = decoded.username
+} 
 
 export default {
   name: 'RatingListItem',
@@ -70,7 +92,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 
 .star-ratings {
   color: #aaa9a9; 
@@ -83,7 +105,7 @@ export default {
 }
  
 .star-ratings-fill {
-  font-size: 30px;
+  font-size: 25px;
   color: #fff58c;
   padding: 0;
   position: absolute;
@@ -96,9 +118,20 @@ export default {
 }
  
 .star-ratings-base {
-  font-size: 30px;
+  font-size: 25px;
   z-index: 0;
   padding: 0;
+}
+.offset-1 > p{
+  font-size: 30px;
+  color: white;
+}
+.row{
+  background-color: lightslategray;
+  border-radius: 30px;
+}
+.text-end > p{
+  cursor:pointer;
 }
 
 </style>

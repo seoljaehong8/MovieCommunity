@@ -48,7 +48,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .movie-title {
   font-size: x-large;
   text-align: left;

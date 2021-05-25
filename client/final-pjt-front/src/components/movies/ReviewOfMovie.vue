@@ -1,21 +1,24 @@
 <template>
   <div v-if="review" class="container">
-    <div @click="routeDetailPage(review)" style="cursor: pointer" class="row">
-      <div class="offset-2 col-3">
+    <div @click="routeDetailPage(review)" style="cursor: pointer" class="row text-start">
+      <div class="offset-1 col-7">
+        <div class="row" style="font-size:20px;">
+          <div class="col-3 mb-5">
+            {{ review.user_name }}
+          </div>
+          <div class="col-6">
+            {{ review.created_at | moment("YYYY-MM-DD HH:mm:ss") }}
+          </div>
+        </div>
+        <div class="row" style="color:white;">
+          <h2 style="text-decoration:underline">{{ review.title }}</h2>
+          <h5>{{ review.content }}</h5>
+        </div>
+      </div>
+      <div class="col-3">
         <img :src="posterPath" width="150px" alt="" />
       </div>
-      <div class="col-5">
-        <h2>작성자 : {{ review.user_name }}</h2>
-        <h2>
-          작성시간 : {{ review.created_at | moment("YYYY-MM-DD HH:mm:ss") }}
-        </h2>
-        <h2>
-          수정시간 : {{ review.updated_at | moment("YYYY-MM-DD HH:mm:ss") }}
-        </h2>
-        <h2>글 제목 : {{ review.title }}</h2>
-        <h2>내용 : {{ review.content }}</h2>
-      </div>
-      <hr>
+      <hr style="color:white; margin-top:14px;">
     </div>
   </div>
 </template>

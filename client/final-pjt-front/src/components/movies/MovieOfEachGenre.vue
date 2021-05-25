@@ -1,25 +1,13 @@
 <template>
   <div>
-    <h1 class="text-start" style="color:white;"> {{genre}} </h1>
+    <div class="d-flex">
+      <h1 @click="showAllMovies(genre)" style="color:white; cursor:pointer;"> {{genre}} </h1>
+    </div>
     <div>
-      <carousel :items="8" :nav="true" :dots="false" class="marginTop50">
+      <carousel :items="8" :nav="false" :dots="false" class="marginTop50">
         <div v-for="(movie,idx) in movies" :key="idx">
           <div class="card" @click="movieDetail(movie)" style="cursor:pointer; height:350px; background-color:black;">
             <img :src="getPosterUrl(movie)" class="card-img-top" alt="...">
-            <!-- <div class="card-body">
-              <h5 class="card-title">{{ movie.title }}</h5>
-              <div class="star-ratings mx-auto">
-                <div 
-                  class="star-ratings-fill space-x-2 text-lg"
-                  :style="{ width: ratingToPercent(movie) + '%' }"
-                >
-                  <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-                </div>
-                <div class="star-ratings-base space-x-2 text-lg">
-                  <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-                </div>
-              </div>              
-            </div> -->
           </div>          
         </div>
       </carousel>
@@ -54,7 +42,12 @@ export default {
     },
     movieDetail: function(movie) {
       localStorage.setItem(`movieId`, movie.id)
+      localStorage.setItem('movieTitle',movie.title)
       this.$router.push({name:'movieDetail'})
+    },
+    showAllMovies: function(genre) {
+      localStorage.setItem('movieGenre',genre)
+      this.$router.push({name:'ShowAllMovies'})
     }
   },
   created: function() {

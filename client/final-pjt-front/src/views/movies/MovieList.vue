@@ -47,7 +47,7 @@ export default {
 
   created: function() {
     axios({
-      method: 'GET',
+      method: 'GET', 
       url: `${SERVER_URL}/movies/`,
       headers: this.setToken()
     })

@@ -117,6 +117,9 @@ export default new Vuex.Store({
       return state.movies.filter( movie => {
         return movie.genre.includes(genre)
       })
+    },
+    getRatingCount: function(state) {
+      return state.ratings.length
     }
   },
   modules: {

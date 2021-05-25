@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h1>Rating</h1>
     <RatingForm :movie="movie"/>    
     <RatingListItem v-for="(rating,idx) in getRating" 
       :key="idx"

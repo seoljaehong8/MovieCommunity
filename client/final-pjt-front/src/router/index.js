@@ -8,6 +8,7 @@ import ReviewForm from '@/components/reviews/ReviewForm'
 import ReviewDetail from '@/components/reviews/ReviewDetail'
 import movieDetail from '@/components/movies/MovieDetail'
 import Recommend from '@/components/recommends/Recommend'
+import ShowAllMovies from '@/components/movies/ShowAllMovies'
 
 
 
@@ -55,7 +56,12 @@ const routes = [
     path: '/movies/recommend',
     name: 'Recommend',
     component: Recommend,
-
+  },
+  {
+    path: '/movies/showAllMovies',
+    name: 'ShowAllMovies',
+    component: ShowAllMovies,
+    props: true
   }
 
 

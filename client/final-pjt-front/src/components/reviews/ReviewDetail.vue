@@ -48,8 +48,11 @@ import CommentList from "@/components/comments/CommentList.vue";
 const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 
 const token = localStorage.getItem('jwt')
-const decoded = jwt_decode(token)
-const username = decoded.username
+let username = ''
+if (token) {
+  const decoded = jwt_decode(token)
+  username = decoded.username
+} 
 
 export default {
   name: "ReviewDetail",

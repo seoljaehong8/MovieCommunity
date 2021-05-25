@@ -8,7 +8,7 @@
     <br>
     <div>
       <label class="label" for="password">비밀번호</label>
-      <input type="password" class="input-text" id="password" v-model="credentials.password">
+      <input @click="login" type="password" class="input-text" id="password" v-model="credentials.password">
     </div>
     <br>
     <router-link :to="{ name: 'Signup' }">회원이 아니신가요? </router-link> 

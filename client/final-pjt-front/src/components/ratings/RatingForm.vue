@@ -1,8 +1,11 @@
 <template>
   <div>
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-      평점등록
-    </button>
+    <div class="text-start ps-5 mb-3">
+      <span> 사용자 평점 총 {{getRatingCount}}건</span>
+      <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        내 평점 등록
+      </button>
+    </div>
 
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
@@ -37,7 +40,8 @@
             </div>
 
             <div>
-              <input v-model="content" type="text" placeholder="이 영화에 대한 소감을 적어주세요.">
+              <textarea cols="50" @keydown.enter="createRating" v-model="content" type="text" placeholder="이 영화에 대한 한줄평을 작성해주세요.">
+              </textarea>
             </div>
             
           </div>
@@ -73,6 +77,7 @@ export default {
       resetableRating: 2,
       currentRating: "No Rating",
       mouseOverRating: null,
+      ratingCount: 0,
     };
   },
   computed: {
@@ -81,6 +86,9 @@ export default {
         ? this.rating*2 + " 점을 선택하셨습니다."
         : "No rating selected";
     },
+    getRatingCount() {
+      return this.$store.getters.getRatingCount
+    }
   },
   methods: {
     setToken: function () {
@@ -104,7 +112,6 @@ export default {
       })
         .then(res=>{
           this.$store.dispatch('createRating', res.data)
-          console.log(res)
         })
         .catch(err=>{
           console.log(err)
@@ -114,6 +121,10 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+span{
+  color:white;
+  font-size:20px;
+  margin-right:10px;
+}
 </style>
