@@ -109,7 +109,7 @@ def movie_list(request):
         movies = get_list_or_404(Movies)
         serializer = MovieSerializer(movies,many=True)
 
-        return Response(serializer.data[:2000])
+        return Response(serializer.data)
 
 @api_view(['GET'])
 @authentication_classes([JSONWebTokenAuthentication])
