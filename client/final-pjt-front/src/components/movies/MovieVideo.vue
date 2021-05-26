@@ -2,7 +2,7 @@
   <div v-if="video" class="row my-5">
     <div v-if="isMain">
       <div class="col-12">
-        <iframe :src="videoUrl" frameborder="0" width="100%" height="900" allow="autoplay;"></iframe>
+        <iframe :src="videoUrl" frameborder="0" width="100%" height="900"></iframe>
       </div>
     </div>
     <div v-else>
@@ -29,7 +29,7 @@ export default {
   computed: {
     videoUrl: function() {
       const videoId = this.video[0].id.videoId
-      return `https://www.youtube.com/embed/${videoId}?autoplay=1`
+      return `https://www.youtube.com/embed/${videoId}`
     },
   },
   created: function() {

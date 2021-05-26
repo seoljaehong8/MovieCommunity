@@ -24,7 +24,8 @@ def make_movieData(request):
         878: 'SF', 10770: 'TV 영화', 53: '스릴러', 10752: '전쟁', 37: '서부'
     }
 
-    while page <= 499:
+    # while page <= 499:
+    while page <= 100:
         print(page)
         page += 1
         url = f'https://api.themoviedb.org/3/movie/popular?api_key=6b3db2093be8e14d01eccd56d390ec42&language=ko&page={page}'
