@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    
     <div class="row">
       <MovieVideo :video="video"/>
     </div>
@@ -9,11 +10,30 @@
       <div id="review" @click="clickReview" class="col-2 align-self-center category" :class="{'category-background':isReview}">리뷰</div>
     </div>
     <div v-if="isInfo" class="row">
-      <div class="col-6">
-        <img :src="posterUrl" alt="">
+      <div class="col-6">        
+        <div class="row">
+          <div class="offset-3 col-6">
+            <img :src="posterUrl" alt="">
+          </div>
+        </div>
+        <div class="row">
+          <div class="offset-3 col-6">
+            <div class="star-ratings">
+              <div 
+                class="star-ratings-fill space-x-2 text-lg"
+                :style="{ width: ratingToPercent + '%' }"
+              >
+                <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+              </div>
+              <div class="star-ratings-base space-x-2 text-lg">
+                <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="col-6 text-start">
-        <div v-if="movie" style="color:lightgray;">
+        <div v-if="movie" style="color:lightgray;">          
           <h1 class="padding">제목 : {{movie.title}}</h1>
           <h3>줄거리 </h3> <br>
           <h5 class="padding"> {{ movie.overview }}</h5>
@@ -27,7 +47,7 @@
       <RatingOfMovie :movie="movie"/>
     </div>    
     <div v-else-if="movie.review_set.length>0 && isReview" class="row">
-      <span> 사용자 평점 총 {{movie.review_count}}건</span>
+      <span> 사용자 리뷰 총 {{movie.review_count}}건</span>
       <ReviewOfMovie v-for="(review,idx) in movie.review_set"
         :key="idx"
         :review="review"
@@ -66,6 +86,7 @@ export default {
       isReview: false,
       video: null,
       posterUrl: null,
+      ratingToPercent: null,
     }
   },
   methods: {
@@ -111,28 +132,29 @@ export default {
     })
       .then(res => {
         this.movie = res.data
+        this.ratingToPercent = res.data.vote_average*10
         this.posterUrl = `https://image.tmdb.org/t/p/w300${res.data.poster_path}`
         console.log(res)
       })
       .catch(err => {
         console.log(err)
       })
-    axios.get(API_URL,{
-        params: {
-          key: API_KEY,
-          // key: 'AIzaSyAGkxTvvS55ycu7HecOY7nU9_eDpEN-3Vo',
-          part: 'snippet',
-          q: localStorage.getItem('movieTitle')+'예고',
-          type: 'video',
-        }
-      })
-        .then(res =>{
-          console.log('youtube:',res.data)
-          this.video = res.data.items.slice(0,1)
-        })
-        .catch(error => {
-          console.log(error)
-        })
+    // axios.get(API_URL,{
+    //     params: {
+    //       key: API_KEY,
+    //       // key: 'AIzaSyAGkxTvvS55ycu7HecOY7nU9_eDpEN-3Vo',
+    //       part: 'snippet',
+    //       q: localStorage.getItem('movieTitle')+'예고',
+    //       type: 'video',
+    //     }
+    //   })
+    //     .then(res =>{
+    //       console.log('youtube:',res.data)          
+    //       this.video = res.data.items.slice(0,1)
+    //     })
+    //     .catch(error => {
+    //       console.log(error)
+    //     })
   }
 }
 </script>
@@ -156,11 +178,41 @@ export default {
     background-color:lightgray;
   }
   span{
-  color:lightgray;
-  font-size:20px;
-  margin-left:80px;
-  margin-bottom: 20px;
-  text-align:left;
+    color:lightgray;
+    font-size:20px;
+    margin-left:80px;
+    margin-bottom: 20px;
+    text-align:left;
   }
+
+.star-ratings {
+  color: #aaa9a9; 
+  position: relative;
+  right:130px;
+  unicode-bidi: bidi-override;
+  width: max-content;
+  -webkit-text-fill-color: transparent; /* Will override color (regardless of order) */
+  -webkit-text-stroke-width: 1.3px;
+  -webkit-text-stroke-color: #2b2a29;
+}
+ 
+.star-ratings-fill {
+  font-size: 35px;
+  color: #fff58c;
+  padding: 0;
+  position: absolute;
+  z-index: 1;
+  display: flex;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  -webkit-text-fill-color: gold;
+}
+ 
+.star-ratings-base {
+  font-size: 19px;
+  z-index: 0;
+  padding: 0;
+}
 
 </style>

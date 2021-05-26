@@ -1,9 +1,8 @@
 <template>
   <div>
-    <h1>댓글</h1>
-    <input v-model="content" @keydown.enter="createComment" type="text" />
-    <button class="input-text" @click="createComment">작성</button>
-    <hr>
+    <h1>Comment</h1>
+    <textarea cols="120" rows="1" v-model="content" @keydown.enter="createComment"></textarea>
+    <button class="input-text btn btn-secondary" @click="createComment">작성</button>
     <CommentListItem v-for="(comment, idx) in comments" :key="idx"
       :comment="comment"
       :reviewId="reviewId"/>
@@ -89,5 +88,10 @@ export default {
 <style>
 .input-text {
   border: 1px solid #eaeaea;
+  margin-left:10px;
+  margin-bottom: 20px;
+}
+textarea{
+  height:30px;
 }
 </style>

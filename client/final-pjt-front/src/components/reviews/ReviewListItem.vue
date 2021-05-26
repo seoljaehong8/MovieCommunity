@@ -1,21 +1,24 @@
 <template>
-  <div class="container" >
-    <div class="row border-change" style="cursor: pointer;" @click="routeDetailPage(review)">
-      <div class="offset-2 col-3">       
-        <p class="movie-title">{{ review.movie_title }}</p>
-        <br>
-        <a class="content-summury review-title">{{review.title}}</a>       
-        <p class="content-summury review-content animate__animated animate__fadeInLeft">{{review.content}}</p>
-        <!-- <p>작성시간 : {{ review.created_at | moment('YYYY-MM-DD HH:mm:ss') }}</p> -->
-        <p class="writer">작성자 : {{ review.user_name }}</p>        
-        <p class="date">{{ review.updated_at | moment('YYYY-MM-DD HH:mm:ss') }}</p>
+  <div v-if="review" class="container">
+    <div @click="routeDetailPage(review)" style="cursor: pointer" class="row text-start">
+      <div class="offset-1 col-7">
+        <div class="row" style="font-size:20px;">
+          <div class="col-3 mb-5">
+            {{ review.user_name }}
+          </div>
+          <div class="col-6">
+            {{ review.created_at | moment("YYYY-MM-DD HH:mm:ss") }}
+          </div>
+        </div>
+        <div class="row">
+          <h2>{{ review.title }}</h2>
+          <h5>{{ review.content }}</h5>
+        </div>
       </div>
-
-      <div class="col-5">
-        <img :src="getMoviePosterPath" alt="" />
+      <div class="col-3">
+        <img :src="getMoviePosterPath" width="150px" alt="" />
       </div>
-
-      <hr />
+      <hr>
     </div>
   </div>
 </template>
@@ -44,48 +47,42 @@ export default {
       localStorage.setItem(`reviewId`, review.id);
       this.$router.push({ name: "ReviewDetail" });
     },
+    
   },
 };
 </script>
 
 <style scoped>
-.movie-title {
-  font-size: x-large;
-  text-align: left;
-}
-
-.content-summury {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.review-title {
-  font-size: x-large;
+h2{
+  color:white;
   text-decoration: underline;
-}
+  font-style: italic;
+  margin:30px 0;
+  overflow: hidden; text-overflow: 
+  ellipsis; display: -webkit-box; 
+  -webkit-line-clamp: 1; 
+  -webkit-box-orient: vertical; 
+  word-wrap:break-word; 
+  line-height: 1.2em; 
+  height: 1.2em;
 
-.review-content {
-  color: black;
-  /* animation:  bounce;
-  animation-duration: 2s;
-  --animate-repeat: 2; */
 }
+h5{
+  color:lightgray;
+  overflow: hidden; text-overflow: 
+  ellipsis; display: -webkit-box; 
+  -webkit-line-clamp: 2; 
+  -webkit-box-orient: vertical; 
+  word-wrap:break-word; 
+  line-height: 1.2em; 
+  height: 2.4em;
 
-.writer {
-  /* display: inline-block; */
-  text-align: right;
 }
+hr{
+  color:white; 
+  margin-top:14px; 
+  width:80%;
 
-.date {
-  /* display: inline-block; */
-  text-align: right;
-}
-
-.border-change {
-    border-radius: 30px;
-    background-color: #F6F6F6;
-    margin: 0 auto;
 }
 
 </style>

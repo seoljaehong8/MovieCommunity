@@ -4,9 +4,9 @@
       <h1 @click="showAllMovies(genre)" style="color:white; cursor:pointer;"> {{genre}} </h1>
     </div>
     <div>
-      <carousel :items="8" :nav="false" :dots="false" class="marginTop50">
+      <carousel :items="10" :nav="false" :dots="false" class="marginTop50">
         <div v-for="(movie,idx) in movies" :key="idx">
-          <div class="card" @click="movieDetail(movie)" style="cursor:pointer; height:350px; background-color:black;">
+          <div class="card" @click="movieDetail(movie)">
             <img :src="getPosterUrl(movie)" class="card-img-top" alt="...">
           </div>          
         </div>
@@ -56,6 +56,14 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+.card{
+  cursor:pointer; 
+  height:350px; 
+  background-color:rgb(15, 15, 15);  
+}
+img:hover {
+  transform:scale(1.2) translate(-22px,30px) !important;
+  z-index:2;
+}
 </style>

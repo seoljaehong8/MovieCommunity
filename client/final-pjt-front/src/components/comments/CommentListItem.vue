@@ -68,12 +68,9 @@ export default {
 </script>
 
 <style scoped>
-  .comment-username {
-    margin-right: 250px;
-  }
-
-  .comment-content {
-    font-weight: 600;
-    font-size: large;
-  }
+#comment{
+  /* background-color: lightgray; */
+  color:lightgray;
+  height: 60px;
+}
 </style>
