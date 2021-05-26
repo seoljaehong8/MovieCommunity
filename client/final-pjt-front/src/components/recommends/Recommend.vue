@@ -27,7 +27,7 @@
         </div>
           </div>    
         <div v-if="isGenre" style="padding-top:50px;">
-          <button @click="onClickTrigger" class="trigger">다시</button>
+          <button @click="onClickTrigger" class="trigger btn btn-outline-secondary">다시</button>
         </div>
         <div v-else style="padding-top:50px;">
           <button @click="onClickTrigger" class="trigger btn btn-outline-success">뽑기</button>

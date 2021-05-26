@@ -71,22 +71,22 @@ export default {
         console.log(res)
       })
 
-    axios.get(API_URL,{
-        params: {
-          key: API_KEY,
-          // key: 'AIzaSyAGkxTvvS55ycu7HecOY7nU9_eDpEN-3Vo',
-          part: 'snippet',
-          q: '노바디 예고',
-          type: 'video',
-        }
-      })
-        .then(res =>{
-          console.log('youtube:',res.data)
-          this.video = res.data.items.slice(0,1)
-        })
-        .catch(error => {
-          console.log(error)
-        })
+    // axios.get(API_URL,{
+    //     params: {
+    //       key: API_KEY,
+    //       // key: 'AIzaSyAGkxTvvS55ycu7HecOY7nU9_eDpEN-3Vo',
+    //       part: 'snippet',
+    //       q: '노바디 예고',
+    //       type: 'video',
+    //     }
+    //   })
+    //     .then(res =>{
+    //       console.log('youtube:',res.data)
+    //       this.video = res.data.items.slice(0,1)
+    //     })
+    //     .catch(error => {
+    //       console.log(error)
+    //     })
   }
 }
 </script>

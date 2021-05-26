@@ -1,15 +1,17 @@
 <template>
-  <div>
-    <div class="comment-username">
-      작성자 : {{ comment.user_name }} 
+  <div class="container">
+    <div id="comment" class="row my-2">
+      <div class="col-3">
+        {{ comment.user_name}} |
+      </div>
+      <div class="col-6 text-start">
+        {{ comment.content }} 
+      </div>
+      <div class="col-3">
+        | {{ comment.created_at | moment("YYYY-MM-DD HH:mm:ss") }} 
+        <button class="btn btn-outline-danger" v-if="isMine" @click="deleteComment">삭제</button>
+      </div>
     </div>
-    <div class="comment-content">
-      {{ comment.content }} 
-    </div>
-    {{ comment.created_at | moment("YYYY-MM-DD HH:mm:ss") }} |
-    {{ comment.updated_at | moment("YYYY-MM-DD HH:mm:ss") }}
-    <button class="btn btn-outline-info" v-if="isMine" @click="deleteComment">삭제</button>  
-    <hr>
   </div>
 </template>
 
