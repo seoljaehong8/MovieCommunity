@@ -4,8 +4,8 @@
       <div class="container">
         <div class="row"> 
           <div class="col-3 my-2" v-for="(movie,idx) in movies" :key="idx">          
-            <div class="card" style="width: 18rem; cursor:pointer;">              
-              <img @click="movieDetail(movie)" :src="getPosterUrl(movie)" height="300" class="card-img-top" alt="...">
+            <div id="searchImage" class="card" style="width: 18rem; cursor:pointer;">              
+              <img  @click="movieDetail(movie)" :src="getPosterUrl(movie)" height="300" class="card-img-top" alt="...">
             </div> 
           </div> 
         </div>
@@ -116,6 +116,10 @@ export default {
 }
 #image:hover{
   transform:scale(1.2) translate(-22px,30px);
+}
+#searchImage:hover{
+  transform:scale(1.2) translate(-22px,30px);
+  z-index:10;
 }
 /* img:hover {
   transform:scale(1.2) translate(-22px,30px) !important;

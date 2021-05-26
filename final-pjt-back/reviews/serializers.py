@@ -22,8 +22,9 @@ class ReviewSerializer(serializers.ModelSerializer):
         model = Review
         # fields="__all__"
         fields = (
-            'id','title','content','user_id', 'created_at','updated_at','movie_title',
-            'poster_path','user_name','comment_set','comment_count','like_users_count', 'like_users'
+            'id','title','content','user_id','movie_id', 'created_at','updated_at','movie_title',
+            'poster_path','user_name','comment_set','comment_count','like_users_count'
         )
+        read_only_fields = ('like_users',)
 
 

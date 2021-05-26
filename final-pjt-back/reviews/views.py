@@ -29,9 +29,13 @@ def review_list_create(request):
     elif request.method == 'POST':
         movie_pk = request.data['movie']
         movie = get_object_or_404(Movies, pk=movie_pk)
-        serializer = ReviewSerializer(data=request.data)
 
-        if serializer.is_valid(raise_exception=True):
+        serializer = ReviewSerializer(data=request.data)
+        # serializer.is_valid()
+        # print(serializer.errors)
+        
+
+        if serializer.is_valid():
             serializer.save(user=request.user, movie=movie)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
@@ -68,13 +72,11 @@ def comment_list_create(request,review_pk):
     if request.method == 'GET':
         comments = review.comment_set.all()
         serializer = CommentSerializer(comments,many=True)
-        print(comments)
         return Response(serializer.data)
 
     elif request.method == 'POST':
         serializer = CommentSerializer(data=request.data)
-        print(request.data)
-        if serializer.is_valid(raise_exception=True):
+        if serializer.is_valid(raise_exception=True): 
             serializer.save(user=request.user, review=review)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 

@@ -17,7 +17,7 @@
                 <input v-model="search" @keydown.enter="searchMovie" type="text" placeholder="movie_title">
                 <button @click="searchMovie" class="btn btn-secondary">검색</button>
                 <br>
-                <p v-if="search">총 {{movies.length}}개가 검색되었습니다.</p>
+                <p v-if="movies">총 {{movies.length}}개가 검색되었습니다.</p>
                 <div v-for="(movie,idx) in movies" :key="idx">
                   <div class="select-title" data-bs-dismiss="modal" @click="clickSelectTitle(movie)">
                     <img :src="getMoviePosterUrl(movie)" width="100" alt="movieImg">

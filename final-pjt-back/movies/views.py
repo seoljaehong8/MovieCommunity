@@ -127,7 +127,9 @@ def create_rating(request,movie_rating_pk):
     if request.method == 'POST':       
         movie = get_object_or_404(Movies,pk=movie_rating_pk)
         serializer = RatingSerializer(data=request.data)
+        print(serializer)
         if serializer.is_valid(raise_exception=True):
+            print(serializer)
             serializer.save(user=request.user, movie=movie)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
     elif request.method == 'DELETE':

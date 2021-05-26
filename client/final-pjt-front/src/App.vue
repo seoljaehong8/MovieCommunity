@@ -23,9 +23,9 @@
               <li class="nav-item">
                 <router-link class="text-white-my" :to="{ name: 'Recommend' }">Pick!!!</router-link>
               </li>
-              <!-- <li class="nav-item">
+              <li class="nav-item">
                 <router-link class="text-white-my" :to="{ name: 'Profile' }">Profile</router-link>
-              </li> -->
+              </li>
               <li class="nav-item">
                 <router-link class="text-white-my" @click.native="logout" to="#">Logout</router-link>
               </li>
