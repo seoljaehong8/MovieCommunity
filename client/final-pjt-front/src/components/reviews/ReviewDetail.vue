@@ -38,10 +38,8 @@
         </div>
         <div v-else>
           <div v-if="isMine" class="review-detail">
-            <h2>글 제목 : {{ review.title }}</h2>
-            <p>내용 : {{ review.content }}</p>
-            <button class="btn btn-outline-primary" @click="changeIsUpdate">수정</button>
-            <button class="btn btn-outline-warning" @click="deleteReview">삭제</button>
+            <h2 class="review-title">{{ review.title }}</h2>
+            <p>{{ review.content }}</p>            
           </div>
           <div v-else class="review-detail">
             <h2 class="review-title">{{ review.title }}</h2>
@@ -50,7 +48,7 @@
         </div>
       </div>
     </div>
-    <br>
+    <hr>
     <CommentList :reviewId="this.review.id" />
   </div>
 </template>
@@ -182,7 +180,8 @@ export default {
     width: 800px;
     padding: 30px 90px;
     border-radius: 30px;
-    background-color: #d3d3d3;
+    /* background-color: #F6F6F6; */
+    background-color: #e6e6e6;
     font-family: 'Noto Sans KR', sans-serif;
     color: black;
 }
