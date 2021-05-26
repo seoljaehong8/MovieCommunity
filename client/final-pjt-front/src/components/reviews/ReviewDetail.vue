@@ -30,9 +30,9 @@
     <div class="row">
       <div class="col">
         <div v-if="isUpdate">
-          <textarea cols="50" rows="2" v-model="updateTitle" type="text"></textarea>
+          <textarea id="update-title" cols="50" rows="2" v-model="updateTitle" type="text"></textarea>
           <br>
-          <textarea cols="50" rows="10" v-model="updateContent" type="text"></textarea>
+          <textarea id="update-content" cols="50" rows="10" v-model="updateContent" type="text"></textarea>
           <br />
           <button @click="updateReview" class="btn btn-outline-info">수정완료</button>
         </div>
@@ -207,6 +207,16 @@ textarea{
   border-radius: 10px;
   background-color: #f3f3f3;
   padding: 10px 10px;
+}
+
+#update-title{
+  height:50px;
+  width: 600px;
+}
+
+#update-content{
+  height: 300px;
+  width: 600px;
 }
 
 </style>

@@ -3,7 +3,7 @@
     <span>
       <i class="fas fa-film fa-3x"></i>
     </span>
-      <h1 class="title">Movie World</h1>
+      <h1 class="title">Pick Screen</h1>
 
     <div id="nav">
       <span v-if="isLogin">
