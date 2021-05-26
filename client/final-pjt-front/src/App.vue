@@ -1,23 +1,50 @@
 <template>
-  <div id="app">
-    <span>
-      <i class="fas fa-film fa-3x"></i>
-    </span>
-      <h1 class="title">Movie World</h1>
+  <div>
+    <div id="app">
+      <nav v-if="isLogin" class="navbar navbar-expand-lg navbar-light">
+        <div class="container-fluid">
+          <a class="navbar-brand text-red" href="/movies/movieList">
+            <span>
+              <i class="fas fa-film fa-3x" style="font-size:30px;"></i>
+            </span>
+              <h3 class="title">Pick Screen</h3>
+          </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <router-link class="text-white-my" :to="{ name: 'MovieList' }">Movie</router-link>
+              </li>
+              <li class="nav-item">
+                <router-link class="text-white-my" :to="{ name: 'ReviewList' }">Review</router-link>
+              </li>
+              <li class="nav-item">
+                <router-link class="text-white-my" :to="{ name: 'Recommend' }">Pick!!!</router-link>
+              </li>
+              <li class="nav-item">
+                <router-link class="text-white-my" :to="{ name: 'Profile' }">Profile</router-link>
+              </li>
+              <li class="nav-item">
+                <router-link class="text-white-my" @click.native="logout" to="#">Logout</router-link>
+              </li>
 
-    <div id="nav">
-      <span v-if="isLogin">
-        <router-link @click.native="logout" to="#">Logout</router-link> |
-        <router-link :to="{ name: 'MovieList' }">Movie</router-link> |
-        <router-link :to="{ name: 'ReviewList' }">Review</router-link> |
-        <router-link :to="{ name: 'Recommend' }">Recommend</router-link> 
-      </span>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
       <span v-else>
-        
-        <!-- <router-link :to="{ name: 'Login' }">Login</router-link>  -->
+
       </span>
+
+      <div style="padding-top:100px;">
+        <router-view @login="isLogin = true"/>
+
+      </div>
     </div>
-    <router-view @login="isLogin = true"/>
+
   </div>
 </template>
 
@@ -62,23 +89,39 @@ export default {
   height: 100vh; */
   
 }
-
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
-
 .title {
   display: inline;
   margin-left: 10px;
   font-family: 'Mountains of Christmas', cursive;
 }
+
+ .navbar{
+   background-color:rgb(15, 15, 15);
+   margin-bottom:50px;
+   position: fixed;
+   z-index:10;
+   width:100%;
+ }
+ .text-white-my{
+   color:rgb(173, 173, 173);
+   text-decoration: none;
+   margin-right:15px;
+   padding-top:0px;
+ }
+ .text-white-my:hover{
+   color:white;
+ }
+ .text-red{
+   color:red;
+ }
+ .nav-item{
+   padding-top:15px;
+ }
+ .login{
+   margin-top:100px;
+ }
+ .router-link-exact-active{
+   color:white;
+   font-size:20px;
+ }
 </style>

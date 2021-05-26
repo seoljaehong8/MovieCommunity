@@ -15,9 +15,9 @@
               </div>
               <div class="modal-body">
                 <input v-model="search" @keydown.enter="searchMovie" type="text" placeholder="movie_title">
-                <button @click="searchMovie">검색</button>
+                <button @click="searchMovie" class="btn btn-secondary">검색</button>
                 <br>
-                <p v-if="selectedMovie">총 {{movies.length}}개가 검색되었습니다.</p>
+                <p v-if="search">총 {{movies.length}}개가 검색되었습니다.</p>
                 <div v-for="(movie,idx) in movies" :key="idx">
                   <div class="select-title" data-bs-dismiss="modal" @click="clickSelectTitle(movie)">
                     <img :src="getMoviePosterUrl(movie)" width="100" alt="movieImg">
@@ -96,6 +96,7 @@ export default {
           this.$router.push({ name: 'ReviewList' })
         })
         .catch(err => {
+          console.log(data)
           console.log(err)
         })    
     },
@@ -159,5 +160,12 @@ export default {
     margin-top:10px;
     font-size: 20px;
     font-weight: bold;
+  }
+  input{
+    width:300px;
+    border-radius:10px;
+    height:40px;
+    margin-right: 5px;
+    padding-left:5px;
   }
 </style>

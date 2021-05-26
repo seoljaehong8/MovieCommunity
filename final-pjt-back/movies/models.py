@@ -12,6 +12,7 @@ class Movies(models.Model):
     vote_average = models.FloatField(default=0.0)
     vote_count = models.IntegerField(default=0)
     popularity = models.FloatField(default=0.0)
+    like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_movies')
 
 class Rating(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)

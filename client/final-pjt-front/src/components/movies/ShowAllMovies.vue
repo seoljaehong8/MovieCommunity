@@ -7,7 +7,7 @@
         </div>
         <div class="col-4 text-end pe-5 py-3  ">
           <input @keydown.enter="searchingMovie" v-model="searchTitle" type="text">
-          <button @click="searchingMovie">검색</button>
+          <button @click="searchingMovie" class="btn btn-secondary">검색</button>
         </div>           
       </div>
       <div v-if="isSearch" class="row"> 
@@ -76,5 +76,12 @@ img:hover {
   transform:scale(1.15);
   transition: transform.3s; 
   z-index:10;
+}
+input{
+  width:300px;
+  border-radius:10px;
+  height:40px;
+  margin-right: 5px;
+  padding-left:5px;
 }
 </style>

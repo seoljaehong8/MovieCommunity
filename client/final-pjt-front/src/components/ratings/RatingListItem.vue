@@ -13,12 +13,12 @@
             <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
           </div>
         </div>
-        <p>{{rating.grade/10}}</p>
+        <p style="padding-right:30px;">{{rating.grade/10}}</p>
       </div>
       <div class="col-8 text-start">
         <span>
           <h3 style="color:white;">{{rating.content}}</h3>
-          <div class="row">
+          <div class="row" style="padding-top:20px;">
             <div class="col-1 ms-1 me-3">
               {{rating.user_name}} 
             </div>

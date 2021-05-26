@@ -2,8 +2,9 @@
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-6">
-        <span style="font-size:120px; color:white;">
-          <i class="far fa-hand-point-down"></i>
+        <span style="font-size:130px; color:red;">
+          <!-- <i class="far fa-hand-point-down"></i> -->
+          <i class="fas fa-long-arrow-alt-down"></i>
         </span>
         <div class="row justify-content-center">
           <div class="col-8">
@@ -79,7 +80,7 @@ export default {
       const genreList = [
         '액션','어드벤처','애니메이션','코미디','범죄','다큐멘터리','드라마',
         '가족','판타지','역사','공포','음악','미스테리','로맨스',
-        'SF','TV영화','스릴러','전쟁','서부'
+        'SF','스릴러','전쟁','서부'
       ]
       const randeomGenre = _.sampleSize(genreList,6)
       return randeomGenre

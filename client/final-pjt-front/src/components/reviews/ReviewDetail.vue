@@ -3,11 +3,23 @@
     <div class="row">
       <div class="offset-3 col-2">
         <img :src="posterPath" alt="" />
+
+        <div v-if="isLiked">
+          <span style="font-size:30px; color:red; cursor:pointer;"><i class="fas fa-heart" @click="clickLike"></i></span>
+          <span style="color:white;"><span class="like-count">{{review.like_users_count}}</span> 명이 좋아합니다.</span>
+        </div>
+        <div v-else>
+          <span style="font-size:30px; color:white; cursor:pointer;"><i class="far fa-heart" @click="clickLike"></i></span>
+          <span style="color:white;"><span class="like-count">{{review.like_users_count}}</span> 명이 좋아합니다.</span>
+        </div>
+
       </div>
       <div class="col-4">
         <div class="row" style="color:lightgray">
           <h1>{{ review.movie_title }}</h1>
         </div>
+
+
         <div id="review-info" class="row">
           <p class="info">작성자 : {{ review.user_name }}</p>
           <p class="info">
@@ -30,9 +42,9 @@
     <div class="row">
       <div class="col">
         <div v-if="isUpdate">
-          <textarea cols="50" rows="2" v-model="updateTitle" type="text"></textarea>
+          <textarea id="update-title" cols="50" rows="2" v-model="updateTitle" type="text"></textarea>
           <br>
-          <textarea cols="50" rows="10" v-model="updateContent" type="text"></textarea>
+          <textarea id="update-content" cols="50" rows="10" v-model="updateContent" type="text"></textarea>
           <br />
           <button @click="updateReview" class="btn btn-outline-info">수정완료</button>
         </div>
@@ -55,19 +67,18 @@
 
 <script>
 import jwt_decode from 'jwt-decode'
-
 import axios from "axios";
 import CommentList from "@/components/comments/CommentList.vue";
 
 const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 
 const token = localStorage.getItem('jwt')
-let username = ''
+let username = 'user'
+let userId = 0
 if (token){
   const decoded = jwt_decode(token)
+  userId = decoded.user_id
   username = decoded.username
-} else{
-  username = 'user'
 }
 
 export default {
@@ -80,6 +91,7 @@ export default {
       updateTitle: null,
       updateContent: null,
       reivews: null,
+      isLiked: false,
     };
   },
   components: {
@@ -88,7 +100,7 @@ export default {
   computed: {
     isMine: function() {
       return username === this.review.user_name
-    }
+    },
   },
   methods: {
     setToken: function () {
@@ -147,6 +159,31 @@ export default {
     changeIsUpdate: function () {
       this.isUpdate = true;
     },
+    clickLike: function() {
+      const reviewId = localStorage.getItem("reviewId");
+      axios({
+        method: 'POST',
+        url: `${SERVER_URL}/reviews/likes/${reviewId}/`,
+        headers: this.setToken() 
+      })
+      .then(res => {
+        const count = res.data.count
+        const liked = res.data.liked
+
+        if (liked) {
+          this.isLiked = true
+        } else{
+          this.isLiked = false
+        }
+
+        const likeCount = document.querySelector('.like-count')
+        likeCount.innerText = count
+      })
+      .catch(err => {
+        console.log(err)
+      })
+    }
+
   },
   created: function () {
     const reviewId = localStorage.getItem("reviewId");
@@ -160,6 +197,11 @@ export default {
         this.updateTitle = this.review.title;
         this.updateContent = this.review.content;
         this.posterPath = `https://image.tmdb.org/t/p/w200${this.review.poster_path}`;
+        if (this.review.like_users.includes(userId)){
+          this.isLiked = true
+        } else{
+          this.isLiked = false
+        }
         console.log(res);
       })
       .catch((err) => {
@@ -207,6 +249,28 @@ textarea{
   border-radius: 10px;
   background-color: #f3f3f3;
   padding: 10px 10px;
+}
+
+#update-title{
+  height:50px;
+  width: 600px;
+}
+
+#update-content{
+  height: 300px;
+  width: 600px;
+}
+
+.like-count{
+  color:white; 
+  font-size:18px;
+  margin-left:10px;
+}
+
+i{
+  animation-name: bounce;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;  
 }
 
 </style>

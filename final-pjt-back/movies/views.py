@@ -1,4 +1,5 @@
 from django.shortcuts import get_object_or_404, render, get_list_or_404
+from django.http.response import JsonResponse
 
 import requests
 from rest_framework.response import Response
@@ -135,3 +136,27 @@ def create_rating(request,movie_rating_pk):
             'delete': f'{movie_rating_pk}번 평이 삭제되었습니다.',
         }
         return Response(data, status=status.HTTP_204_NO_CONTENT)
+
+
+@api_view(['POST'])
+@authentication_classes([JSONWebTokenAuthentication])
+@permission_classes([IsAuthenticated])
+def likes(request, movie_pk):
+    movie = get_object_or_404(Movies, pk=movie_pk)
+
+    if movie.like_users.filter(pk=request.user.pk).exists():
+        #좋아요 취소
+        movie.like_users.remove(request.user)
+        liked = False
+    else:
+        #좋아요 누름
+        movie.like_users.add(request.user)
+        liked = True
+    
+    context = {
+        'liked' : liked,
+        'count' : movie.like_users.count(),
+    }
+
+    return JsonResponse(context)
+
