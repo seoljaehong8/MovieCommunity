@@ -9,6 +9,7 @@ import ReviewDetail from '@/components/reviews/ReviewDetail'
 import movieDetail from '@/components/movies/MovieDetail'
 import Recommend from '@/components/recommends/Recommend'
 import ShowAllMovies from '@/components/movies/ShowAllMovies'
+// import Profile from '@/views/accounts/Profile/'
 
 
 
@@ -62,7 +63,12 @@ const routes = [
     name: 'ShowAllMovies',
     component: ShowAllMovies,
     props: true
-  }
+  },
+  // {
+  //   path: '/accounts/Profile',
+  //   name: 'Profile',
+  //   component: Profile,
+  // }
 
 
 ]

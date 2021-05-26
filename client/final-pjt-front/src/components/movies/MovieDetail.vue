@@ -17,7 +17,8 @@
           </div>
         </div>
         <div class="row">
-          <div class="offset-3 col-6">
+          <div class="offset-3 col-6 star">
+
             <div class="star-ratings">
               <div 
                 class="star-ratings-fill space-x-2 text-lg"
@@ -29,17 +30,21 @@
                 <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
               </div>
             </div>
+            
           </div>
         </div>
       </div>
       <div class="col-6 text-start">
         <div v-if="movie" style="color:lightgray;">          
-          <h1 class="padding">제목 : {{movie.title}}</h1>
-          <h3>줄거리 </h3> <br>
+          <span class="padding ">제목 : {{movie.title}}</span>
+          <span v-if="isLiked" class="like-button" style="color:red;"><i class="fas fa-heart ms-5" @click="clickLike"></i></span>
+          <span v-else class="like-button" style="color:white;"><i class="far fa-heart ms-5" @click="clickLike"></i></span>
+          <h3 class="mt-5">줄거리 </h3> <br>
           <h5 class="padding"> {{ movie.overview }}</h5>
           <h3 class="padding">개봉날짜 : {{ movie.release_date}}</h3>
           <h3 class="padding">장르 : {{ movie.genre }}</h3>
           <h3 class="padding">평점 : {{ movie.vote_average }}</h3>
+          
         </div>
       </div>
     </div>
@@ -47,7 +52,12 @@
       <RatingOfMovie :movie="movie"/>
     </div>    
     <div v-else-if="movie.review_set.length>0 && isReview" class="row">
-      <span> 사용자 리뷰 총 {{movie.review_count}}건</span>
+      <div class="col-3 pt-2" style="padding-left:70px;">
+        <h4 class="d-flex"> 사용자 리뷰 총 {{movie.review_count}}건</h4>
+      </div>
+      <div class="col-3">
+        <button @click="routerToCreateReview" class="btn btn-secondary d-flex">리뷰쓰러가기</button>
+      </div>
       <ReviewOfMovie v-for="(review,idx) in movie.review_set"
         :key="idx"
         :review="review"
@@ -65,11 +75,19 @@ import axios from 'axios'
 import ReviewOfMovie from '@/components/movies/ReviewOfMovie.vue'
 import RatingOfMovie from '@/components/movies/RatingOfMovie.vue'
 import MovieVideo from '@/components/movies/MovieVideo.vue'
+import jwt_decode from 'jwt-decode'
 
 const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 
 const API_URL = 'https://www.googleapis.com/youtube/v3/search'
 const API_KEY = process.env.VUE_APP_YOUTUBE_API_KEY
+
+const token = localStorage.getItem('jwt')
+let userId = 0
+if (token){
+  const decoded = jwt_decode(token)
+  userId = decoded.user_id
+}
 
 export default {
   name: 'movieDetail',
@@ -87,6 +105,7 @@ export default {
       video: null,
       posterUrl: null,
       ratingToPercent: null,
+      isLiked: false,
     }
   },
   methods: {
@@ -118,10 +137,35 @@ export default {
     clickInfo: function() {
       this.isInfo = true
       this.isRating = false
-      this.isreview = false
+      this.isReview = false
       const info = document.querySelector('#info')
       info.classList.add('category-background')
     },
+    routerToCreateReview: function() {
+      this.$router.push({name:'ReviewForm'})
+    },
+    clickLike: function() {
+      const movieId = localStorage.getItem("movieId");
+      axios({
+        method: 'POST',
+        url: `${SERVER_URL}/movies/likes/${movieId}/`,
+        headers: this.setToken() 
+      })
+      .then(res => {
+        const liked = res.data.liked
+
+        if (liked) {
+          this.isLiked = true
+        } else{
+          this.isLiked = false
+        }
+
+      })
+      .catch(err => {
+        console.log(err)
+      })
+    },
+
   },
   created: function(){
     const movieId = localStorage.getItem(`movieId`)
@@ -134,27 +178,32 @@ export default {
         this.movie = res.data
         this.ratingToPercent = res.data.vote_average*10
         this.posterUrl = `https://image.tmdb.org/t/p/w300${res.data.poster_path}`
+        if (this.movie.like_users.includes(userId)){
+          this.isLiked = true
+        } else{
+          this.isLiked = false
+        }
         console.log(res)
       })
       .catch(err => {
         console.log(err)
       })
-    // axios.get(API_URL,{
-    //     params: {
-    //       key: API_KEY,
-    //       // key: 'AIzaSyAGkxTvvS55ycu7HecOY7nU9_eDpEN-3Vo',
-    //       part: 'snippet',
-    //       q: localStorage.getItem('movieTitle')+'예고',
-    //       type: 'video',
-    //     }
-    //   })
-    //     .then(res =>{
-    //       console.log('youtube:',res.data)          
-    //       this.video = res.data.items.slice(0,1)
-    //     })
-    //     .catch(error => {
-    //       console.log(error)
-    //     })
+    axios.get(API_URL,{
+        params: {
+          key: API_KEY,
+          // key: 'AIzaSyAGkxTvvS55ycu7HecOY7nU9_eDpEN-3Vo',
+          part: 'snippet',
+          q: localStorage.getItem('movieTitle')+'예고',
+          type: 'video',
+        }
+      })
+        .then(res =>{
+          console.log('youtube:',res.data)          
+          this.video = res.data.items.slice(0,1)
+        })
+        .catch(error => {
+          console.log(error)
+        })
   }
 }
 </script>
@@ -177,18 +226,18 @@ export default {
     color: black;
     background-color:lightgray;
   }
-  span{
-    color:lightgray;
+  h4{
+    color:white;
     font-size:20px;
     margin-left:80px;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     text-align:left;
   }
 
 .star-ratings {
   color: #aaa9a9; 
   position: relative;
-  right:130px;
+  /* right:130px; */
   unicode-bidi: bidi-override;
   width: max-content;
   -webkit-text-fill-color: transparent; /* Will override color (regardless of order) */
@@ -214,5 +263,23 @@ export default {
   z-index: 0;
   padding: 0;
 }
+span{
+  margin-left: 0;
+  font-size: 40px;
+}
+.star{
+  height:60px;
+  padding-left:60px;
+}
 
+.like-button{
+  cursor:pointer;
+  font-size:40px;
+}
+
+i{
+  animation-name: bounce;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;  
+}
 </style>

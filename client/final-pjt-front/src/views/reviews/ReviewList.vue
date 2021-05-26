@@ -1,9 +1,9 @@
 <template>
   <div>
     <div id="createButton">
-      <button type="button" class="btn btn-light">
+      <button type="button" class="btn btn-secondary">
         <router-link :to="{ name: 'ReviewForm' }" class="a-tag"
-          >리뷰 작성</router-link
+          >내 리뷰 작성하기</router-link
         >
       </button>
     </div>
@@ -69,6 +69,7 @@ export default {
 <style scoped>
 .a-tag {
   text-decoration: none;
+  color: white;
 }
 
 .review-list {
@@ -79,5 +80,6 @@ export default {
   text-align: right;
   padding-right:600px;
 }
+
 
 </style>

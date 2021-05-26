@@ -1,10 +1,17 @@
 <template>
   <div >
-    <MovieVideo :video="video" :mainTitle="mainTitle"/>
-    <MovieListItem :movies="movies"/>  
-    <MovieOfEachGenre v-for="(genre,idx) in genreList" 
-    :key="idx"
-    :genre="genre"/>
+    <div v-if="searchTitle === ''">
+      <MovieVideo :video="video" :mainTitle="mainTitle"/>
+      <input @input="searchingMovie" v-model="searchTitle" type="text">
+      <button @click="searchingMovie" class="btn btn-secondary">검색</button>
+      <MovieListItem :movies="movies"/>  
+      <MovieOfEachGenre v-for="(genre,idx) in genreList" 
+      :key="idx"
+      :genre="genre"/>
+    </div>
+    <div v-if="isSearch">
+      <MovieListItem :movies="searchingMovie()" :isSearch="isSearch"/>  
+    </div>
   </div>
 </template>
 
@@ -32,7 +39,9 @@ export default {
   data: function() {
     return {
       video: null,
-      mainTitle: 'main'
+      mainTitle: 'main',
+      searchTitle: '',  
+      isSearch: false,
     }
   },
   computed: {
@@ -56,6 +65,14 @@ export default {
       }
       return config
     },
+    searchingMovie: function() {
+      const movieList = this.$store.getters.getMovieList
+      const movies = movieList.filter( movie => {
+        return movie.title.includes(this.searchTitle)
+      })
+      this.isSearch = true
+      return movies
+    },
   },
 
   created: function() {
@@ -71,26 +88,33 @@ export default {
         console.log(res)
       })
 
-    // axios.get(API_URL,{
-    //     params: {
-    //       key: API_KEY,
-    //       // key: 'AIzaSyAGkxTvvS55ycu7HecOY7nU9_eDpEN-3Vo',
-    //       part: 'snippet',
-    //       q: '노바디 예고',
-    //       type: 'video',
-    //     }
-    //   })
-    //     .then(res =>{
-    //       console.log('youtube:',res.data)
-    //       this.video = res.data.items.slice(0,1)
-    //     })
-    //     .catch(error => {
-    //       console.log(error)
-    //     })
+    axios.get(API_URL,{
+        params: {
+          key: API_KEY,
+          // key: 'AIzaSyAGkxTvvS55ycu7HecOY7nU9_eDpEN-3Vo',
+          part: 'snippet',
+          q: '노바디 예고',
+          type: 'video',
+        }
+      })
+        .then(res =>{
+          console.log('youtube:',res.data)
+          this.video = res.data.items.slice(0,1)
+        })
+        .catch(error => {
+          console.log(error)
+        })
   }
 }
 </script>
 
-<style>
+<style scoped>
+input{
+  width:300px;
+  border-radius:10px;
+  height:40px;
+  margin-right: 5px;
+  padding-left:5px;
+}
 
 </style>

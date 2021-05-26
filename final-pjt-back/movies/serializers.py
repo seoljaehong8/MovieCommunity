@@ -4,7 +4,7 @@ from reviews.serializers import ReviewSerializer
 
 class RatingSerializer(serializers.ModelSerializer):
     user_name = serializers.ReadOnlyField(source='user.username')
-
+    
     class Meta:
         model = Rating
         fields = (
@@ -25,6 +25,8 @@ class MovieSerializer(serializers.ModelSerializer):
     review_set = ReviewSerializer(read_only=True, many=True)
     review_count = serializers.IntegerField(source='review_set.count', read_only=True)
 
+    like_users_count = serializers.IntegerField(source='like_users.count', read_only=True)
+
     class Meta:
         model = Movies
         fields = (
@@ -40,5 +42,7 @@ class MovieSerializer(serializers.ModelSerializer):
             'rating_set',
             'rating_count',
             'review_set',
-            'review_count'
+            'review_count',
+            'like_users',
+            'like_users_count'
         )

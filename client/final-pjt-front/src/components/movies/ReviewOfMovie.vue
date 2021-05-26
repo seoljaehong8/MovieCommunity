@@ -9,9 +9,13 @@
           <div class="col-6">
             {{ review.created_at | moment("YYYY-MM-DD HH:mm:ss") }}
           </div>
+          <div class="offset-1 col-2"> 
+            <span style="font-size:30px; color:red; cursor:pointer;"><i class="fas fa-heart" ></i></span>
+            <span style="color:lightgray; margin-left:15px;"><span class="like-count">{{review.like_users_count}}</span></span>            
+          </div>
         </div>
         <div class="row">
-          <h2>{{ review.title }}</h2>
+          <h2 class="title">{{ review.title }}</h2>
           <h5 class="content">{{ review.content }}</h5>
         </div>
       </div>
@@ -32,7 +36,7 @@ export default {
   computed: {
     posterPath : function() {
       return `https://image.tmdb.org/t/p/w200${this.review.poster_path}`
-    }
+    },
   },
   methods: {
     routeDetailPage: function (review) {
@@ -47,14 +51,14 @@ export default {
 </script>
 
 <style scoped>
-h2{
+.title{
   color:white;
   text-decoration: underline;
-}
-h5{
-  color:lightgray;
+  font-style: italic;
+  margin-bottom:40px;
 }
 .content{
+  color:lightgray;
   overflow: hidden; text-overflow: 
   ellipsis; display: -webkit-box; 
   -webkit-line-clamp: 2; 

@@ -1,11 +1,11 @@
 
+from django.http.response import JsonResponse
 from django.shortcuts import render, get_object_or_404, get_list_or_404
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework.decorators import authentication_classes, permission_classes
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.views import APIView
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 from .models import Review, Comment
@@ -90,3 +90,26 @@ def comment_delete_update(request,review_pk,comment_pk):
             'delete' : f'{comment_pk}번 댓글이 삭제되었습니다.'
         }
         return Response(data, status=status.HTTP_204_NO_CONTENT)
+
+
+@api_view(['POST'])
+@authentication_classes([JSONWebTokenAuthentication])
+@permission_classes([IsAuthenticated])
+def likes(request, review_pk):
+    review = get_object_or_404(Review, pk=review_pk)
+
+    if review.like_users.filter(pk=request.user.pk).exists():
+        #좋아요 취소
+        review.like_users.remove(request.user)
+        liked = False
+    else:
+        #좋아요 누름
+        review.like_users.add(request.user)
+        liked = True
+    
+    context = {
+        'liked' : liked,
+        'count' : review.like_users.count(),
+    }
+
+    return JsonResponse(context)

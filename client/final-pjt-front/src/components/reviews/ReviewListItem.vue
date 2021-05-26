@@ -9,9 +9,13 @@
           <div class="col-6">
             {{ review.created_at | moment("YYYY-MM-DD HH:mm:ss") }}
           </div>
+          <div class="offset-1 col-2"> 
+            <span style="font-size:30px; color:red; cursor:pointer;"><i class="fas fa-heart" ></i></span>
+            <span style="color:lightgray; margin-left:15px;"><span class="like-count">{{review.like_users_count}}</span></span>            
+          </div>
         </div>
         <div class="row">
-          <h2>{{ review.title }}</h2>
+          <h2 style="margin-bottom:45px;">{{ review.title }}</h2>
           <h5>{{ review.content }}</h5>
         </div>
       </div>
@@ -24,12 +28,9 @@
 </template>
 
 <script>
-// import axios from "axios"
 import Vue from "vue";
 import vueMoment from "vue-moment";
 Vue.use(vueMoment);
-
-// const SERVER_URL = process.env.VUE_APP_SERVER_URL
 
 export default {
   name: "ReviewListItem",
@@ -46,8 +47,7 @@ export default {
     routeDetailPage: function (review) {
       localStorage.setItem(`reviewId`, review.id);
       this.$router.push({ name: "ReviewDetail" });
-    },
-    
+    },    
   },
 };
 </script>
