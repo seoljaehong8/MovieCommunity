@@ -1,9 +1,10 @@
 <template>
   <div >
+
+    <MovieVideo :video="video" :mainTitle="mainTitle"/>
+    <input @input="searchingMovie" v-model="searchTitle" type="text">
+    <button @click="searchingMovie" class="btn btn-secondary">검색</button>
     <div v-if="searchTitle === ''">
-      <MovieVideo :video="video" :mainTitle="mainTitle"/>
-      <input @input="searchingMovie" v-model="searchTitle" type="text">
-      <button @click="searchingMovie" class="btn btn-secondary">검색</button>
       <MovieListItem :movies="movies"/>  
       <MovieOfEachGenre v-for="(genre,idx) in genreList" 
       :key="idx"
