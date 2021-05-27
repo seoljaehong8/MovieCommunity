@@ -1,7 +1,12 @@
 <template>
   <div >
 
-    <MovieVideo :video="video" :mainTitle="mainTitle"/>
+    <div v-if="youtubeError">
+      <h1 style="color:white; margin:100px;">{{youtubeError}}</h1>
+    </div>
+    <div v-else>
+      <MovieVideo :video="video" :mainTitle="mainTitle"/>
+    </div>
     <input @keydown.enter="searchingMovie" v-model="searchTitle" type="text">
     <button @click="searchingMovie" class="btn btn-secondary">검색</button>
     <div v-if="searchTitle === ''">
@@ -98,10 +103,10 @@ export default {
         }
       })
         .then(res =>{
-          console.log('youtube:',res.data)
           this.video = res.data.items.slice(0,1)
         })
         .catch(error => {
+          this.youtubeError = '유튜브 API키 요청 횟수를 초과하였습니다.'
           console.log(error)
         })
   }
