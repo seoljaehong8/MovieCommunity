@@ -48,6 +48,7 @@ export default {
       mainTitle: 'main',
       searchTitle: '',  
       isSearch: false,
+      youtubeError: null,
     }
   },
   computed: {
