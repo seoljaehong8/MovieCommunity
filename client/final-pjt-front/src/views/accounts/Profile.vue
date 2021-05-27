@@ -30,7 +30,7 @@
         <div id="like" @click="clickLike" class="col-2 align-self-center category" :class="{'category-background':isLike}">찜한 영화</div>
       </div>
       <!-- 내 리뷰 -->
-      <div class="row" v-if="isReview">
+      <div class="row" v-if="isReview && myProfile">
         <div v-if="myProfile.review_count === 0">
           <h1 style="color:white;">작성한 리뷰가 없습니다.</h1>
         </div>
@@ -49,7 +49,7 @@
           :movie="movie"
         >
           <h2 style="color:gold;">{{movie.grade/10}}</h2>
-          <img :src="movie.poster_path" alt="">
+          <img @click="movieDetail(movie)" :src="movie.poster_path" alt="">
         </div>
       </div>
       <!-- 찜한 영화 -->
@@ -61,7 +61,7 @@
           :key="idx"
           :movie="movie"
         >
-          <img :src="`https://image.tmdb.org/t/p/w200${movie.poster_path}`" alt="">
+          <img @click="movieDetail(movie)" :src="`https://image.tmdb.org/t/p/w200${movie.poster_path}`" alt="">
         </div>
       </div>
 
@@ -84,7 +84,6 @@ let decoded = null
 let username = null
 if (token) {
   const decoded = jwt_decode(token)
-  console.log(decoded)
   userId = decoded.user_id
   username = decoded.username
 }
@@ -120,30 +119,31 @@ export default {
       return config;
     },
     clickReview: function() {
-      console.log('click review')
       this.isReview = true
       this.isRating = false
       this.isLike = false
       const info = document.querySelector('#review')
       info.classList.add('category-background')
-      console.log(this.isReview,this.isRating)
     },
     clickRating: function() {
-      console.log('click rating')
       this.isRating = true
       this.isReview = false
       this.isLike = false
       const info = document.querySelector('#rating')
       info.classList.add('category-background')
-      console.log(this.isReview,this.isRating)
     },
     clickLike: function() {
-      console.log('click like')
       this.isLike = true
       this.isRating = false
       this.isReview = false
       const like = document.querySelector('#like')
       like.classList.add('category-background')
+    },
+    movieDetail: function(movie) {
+      console.log(movie)
+      localStorage.setItem(`movieId`, movie.id)
+      localStorage.setItem('movieTitle',movie.title)
+      this.$router.push({name:'movieDetail'})
     },
   },
   created: function() {
@@ -156,11 +156,12 @@ export default {
         this.myProfile = res.data
         this.reviews = res.data.review_set
         this.likeMovies = res.data.like_movies
-        console.log(res.data)
         const myRatingSet = res.data.rating_set
         this.myLikeMovies = res.data.like_movies
+
         myRatingSet.forEach(rating => {
           const movieId = rating.movie_id
+          const movieTitle = rating.movie_title
           const grade = rating.grade
           axios({
             method: 'GET',
@@ -170,10 +171,11 @@ export default {
             .then(res => {
               const data = {
                 poster_path : `https://image.tmdb.org/t/p/w200${res.data.poster_path}`,
-                grade : grade
+                grade : grade,
+                id : movieId,
+                title : movieTitle,
               }
               this.myRatingMovies.push(data)
-              console.log(res)
             })
             .catch(err => {
               console.log(err)
@@ -212,5 +214,8 @@ export default {
 .category-background {
   color: black;
   background-color:lightgray;
+}
+img{
+  cursor:pointer;
 }
 </style>

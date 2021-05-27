@@ -123,7 +123,6 @@ export default {
       this.isInfo = false
       const info = document.querySelector('#rating')
       info.classList.add('category-background')
-      console.log(this.isReview,this.isRating)
     },
     clickReview: function() {
       console.log('click review')
@@ -132,7 +131,6 @@ export default {
       this.isInfo = false
       const info = document.querySelector('#review')
       info.classList.add('category-background')
-      console.log(this.isReview,this.isRating)
     },
     clickInfo: function() {
       this.isInfo = true
@@ -188,22 +186,20 @@ export default {
       .catch(err => {
         console.log(err)
       })
-    // axios.get(API_URL,{
-    //     params: {
-    //       key: API_KEY,
-    //       // key: 'AIzaSyAGkxTvvS55ycu7HecOY7nU9_eDpEN-3Vo',
-    //       part: 'snippet',
-    //       q: localStorage.getItem('movieTitle')+'예고',
-    //       type: 'video',
-    //     }
-    //   })
-    //     .then(res =>{
-    //       console.log('youtube:',res.data)          
-    //       this.video = res.data.items.slice(0,1)
-    //     })
-    //     .catch(error => {
-    //       console.log(error)
-    //     })
+    axios.get(API_URL,{
+        params: {
+          key: API_KEY,
+          part: 'snippet',
+          q: localStorage.getItem('movieTitle')+'예고',
+          type: 'video',
+        }
+      })
+        .then(res =>{
+          this.video = res.data.items.slice(0,1)
+        })
+        .catch(error => {
+          console.log(error)
+        })
   }
 }
 </script>

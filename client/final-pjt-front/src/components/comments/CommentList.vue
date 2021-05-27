@@ -58,7 +58,6 @@ export default {
       })
         .then((res) => {
           this.$store.dispatch("createComment", res.data);
-          console.log(res);
         })
         .catch((err) => {
           console.log(err);
@@ -75,8 +74,6 @@ export default {
     })
       .then((res) => {
         this.$store.dispatch("createCommentsList", res.data.comment_set);
-        console.log('comment_set : ',res.data.comment_set)
-        console.log(res);
       })
       .catch((err) => {
         console.log(err);

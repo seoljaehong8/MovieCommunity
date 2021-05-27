@@ -42,12 +42,12 @@ export default {
         data: this.credentials,
       })
         .then(res => {
-          console.log(res)
           localStorage.setItem('jwt', res.data.token)
           this.$emit('login')
           this.$router.push({ name: 'MovieList' })
         })
         .catch(err => {
+          alert('사용자 정보가 올바르지 않습니다.')
           console.log(err)
         })
     }

@@ -96,7 +96,6 @@ export default {
           this.$router.push({ name: 'ReviewList' })
         })
         .catch(err => {
-          console.log(data)
           console.log(err)
         })    
     },

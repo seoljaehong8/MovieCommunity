@@ -29,7 +29,6 @@ export default {
   },
   created: function() {
     this.$store.dispatch('createRatingList',this.movie.rating_set)
-    console.log(this.movie)
   }
 };
 </script>

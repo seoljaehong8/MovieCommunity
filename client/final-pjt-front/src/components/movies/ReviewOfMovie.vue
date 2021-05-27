@@ -44,9 +44,6 @@ export default {
       this.$router.push({ name: "ReviewDetail" });
     },
   },
-  created: function() {
-    console.log(this.review)
-  }
 }
 </script>
 

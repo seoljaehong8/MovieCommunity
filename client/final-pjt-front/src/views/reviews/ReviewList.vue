@@ -21,7 +21,6 @@
 <script>
 import axios from "axios";
 import _ from "lodash";
-// import { mapState } from 'vuex'
 
 import ReviewListItem from "@/components/reviews/ReviewListItem.vue";
 

@@ -4,6 +4,7 @@ from reviews.serializers import ReviewSerializer
 
 class RatingSerializer(serializers.ModelSerializer):
     user_name = serializers.ReadOnlyField(source='user.username')
+    movie_title = serializers.ReadOnlyField(source='movie.title')
     
     class Meta:
         model = Rating
@@ -16,6 +17,7 @@ class RatingSerializer(serializers.ModelSerializer):
             'created_at',
             'updated_at',
             'user_name',
+            'movie_title'
         )
 
 class MovieSerializer(serializers.ModelSerializer):

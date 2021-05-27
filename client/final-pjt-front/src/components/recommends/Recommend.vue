@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <h1 id="title">뭘 봐야 할지 고민일땐? 그냥 돌려돌려~~</h1>
     <div class="row justify-content-center">
       <div class="col-6">
         <span style="font-size:130px; color:red;">
@@ -125,6 +126,10 @@ export default {
 </script>
 
 <style scoped>
+#title{
+  color:white;
+  
+}
 .fill {  
   position: absolute;
   top: 0;

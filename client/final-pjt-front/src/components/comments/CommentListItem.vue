@@ -50,7 +50,6 @@ export default {
       return config;
     },
     deleteComment: function() {
-      console.log('comment.id : ',this.comment.id)
       this.$store.dispatch('deleteComment',this.comment)
 
       axios({

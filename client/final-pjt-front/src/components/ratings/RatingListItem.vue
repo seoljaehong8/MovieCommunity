@@ -44,14 +44,7 @@ import jwt_decode from 'jwt-decode'
 
 const SERVER_URL = process.env.VUE_APP_SERVER_URL
 
-const token = localStorage.getItem('jwt')
-let username = ''
-if (token){
-  const decoded = jwt_decode(token)
-  username = decoded.username
-} else{
-  username = 'user'
-}
+
 
 export default {
   name: 'RatingListItem',
@@ -60,6 +53,14 @@ export default {
   },
   computed: {
     isMine: function() {
+      const token = localStorage.getItem('jwt')
+      let username = ''
+      if (token){
+        const decoded = jwt_decode(token)
+        username = decoded.username
+      } else{
+        username = 'user'
+      }
       return username === this.rating.user_name
     }
   },
@@ -83,7 +84,6 @@ export default {
         headers : this.setToken(),
       })
         .then(res => {
-          console.log(res)
           alert('삭제되었습니다.')
         })
         .catch(err=>{

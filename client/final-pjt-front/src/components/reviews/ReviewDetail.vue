@@ -133,7 +133,6 @@ export default {
       })
         .then((res) => {
           alert('글이 수정 되었습니다.')
-          console.log(res);
         })
         .catch((err) => {
           console.log(err);
@@ -150,7 +149,6 @@ export default {
         .then((res) => {
           alert("글이 삭제 되었습니다.");
           this.$router.push({ name: "ReviewList" });
-          console.log(res);
         })
         .catch((err) => {
           console.log(err);
