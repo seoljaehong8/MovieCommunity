@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,7 +27,7 @@ SECRET_KEY = 'f^u2q0x_da9x))_jmt4iki53t*r7e!c@g0bjvhb%4zb3@sfe$k'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -60,7 +61,17 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True
-
+#Access-Control-Allow-Origin: '*'
+#CORS_ALLOWED_ORIGINS = [
+#        "http://54.221.95.166"
+#        "http://54.221.95.166:80"
+#]
+#CORS_ORIGIN_WHITELIST = [
+#        "http://54.221.95.166",
+#        "http://54.221.95.166",
+#        "http://54.221.95.166:80",
+#        "http://54.221.95.166:80"
+#]
 ROOT_URLCONF = 'MovieCommunity.urls'
 
 TEMPLATES = [
@@ -133,7 +144,7 @@ USE_TZ = True
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 STATIC_URL = '/static/'
-
+STATIC_ROOT = BASE_DIR/'staticfiles'
 AUTH_USER_MODEL = 'accounts.User'
 
 JWT_AUTH = {
