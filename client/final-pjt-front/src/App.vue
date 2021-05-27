@@ -29,6 +29,9 @@
               <li class="nav-item">
                 <router-link class="text-white-my" @click.native="logout" to="#">Logout</router-link>
               </li>
+              <li class="nav-item" v-if="isAdmin">
+                <a :href="getAdminUrl">admin</a>
+              </li>
 
             </ul>
           </div>
@@ -49,13 +52,23 @@
 </template>
 
 <script>
+import jwt_decode from 'jwt-decode'
+import axios from "axios";
+
+const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 
 export default {
   name: 'App',
   data: function () {
     return {
       isLogin: false,
+      isAdmin: false,
     }
+  },
+  computed: {
+    getAdminUrl: function() {
+      return `${SERVER_URL}/admin/`
+    },
   },
   methods: {
     logout: function () {
@@ -63,12 +76,34 @@ export default {
       localStorage.removeItem('jwt')
       this.$router.push({ name: 'Login' })
     },
+    setToken: function () {
+      const token = localStorage.getItem("jwt");
+      const config = {
+        Authorization: `JWT ${token}`,
+      };
+      return config;
+    },
 
   },
   created: function () {
     const token = localStorage.getItem('jwt')
     if (token) {
       this.isLogin = true
+      const decoded = jwt_decode(token)
+      const userId = decoded.user_id  
+      axios({
+        url: `${SERVER_URL}/accounts/${userId}/`,
+        method: 'GET',
+        headers: this.setToken()
+      })
+        .then(res => {
+          if (res.data.is_superuser) {
+            this.isAdmin = true
+          }
+        })
+        .catch(err => {
+          console.log(err)
+        })
     } else if(this.$route.path !== '/accounts/login') {
       this.$router.push({ name: 'Login' })
     }
