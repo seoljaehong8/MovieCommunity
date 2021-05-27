@@ -1,8 +1,11 @@
 <template>
   <div class="container">
     
-    <div class="row">
-      <MovieVideo :video="video"/>
+    <div v-if="youtubeError">
+      <h1 style="color:white; margin:100px;">{{youtubeError}}</h1>
+    </div>
+    <div v-else>
+      <MovieVideo :video="video" :mainTitle="mainTitle"/>
     </div>
     <div class="row mb-5">
       <div id="info" @click="clickInfo" class="offset-1 col-2 align-self-center category" :class="{'category-background':isInfo}">영화정보</div>
@@ -106,6 +109,7 @@ export default {
       posterUrl: null,
       ratingToPercent: null,
       isLiked: false,
+      youtubeError: null,
     }
   },
   methods: {
@@ -198,6 +202,7 @@ export default {
           this.video = res.data.items.slice(0,1)
         })
         .catch(error => {
+          this.youtubeError = '유튜브 API키 요청횟수를 초과하였습니다.'
           console.log(error)
         })
   }
