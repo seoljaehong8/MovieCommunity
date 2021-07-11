@@ -22,5 +22,5 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = (
             'username', 'password','like_movies','like_movies_count',
-            'review_set','review_count','rating_set','rating_count',
+            'review_set','review_count','rating_set','rating_count','is_superuser',
             )
